@@ -1,7 +1,7 @@
 <template>
 
   <section class="src-components-coordinador">
-    <h1>src-components-coordinador Component</h1>
+    <h1>Hola {{this.$route.query.nombre}} {{this.$route.query.apellido}}</h1>
   </section>
 
 </template>

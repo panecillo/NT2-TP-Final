@@ -88,7 +88,8 @@
               this.datos=res.data
               if(this.datos[0] != undefined){
                 this.$router.push({
-                    path: '/Alumno'
+                    path: '/Alumno',
+                    query: this.datos[0]
                 })
               }
               else{
@@ -97,7 +98,8 @@
                   this.datos=res.data
                   if(this.datos[0] != undefined){
                     this.$router.push({
-                        path: '/Profesor'
+                        path: '/Profesor',
+                        query: this.datos[0]
                     })
                   }
                   else{
@@ -106,7 +108,8 @@
                       this.datos=res.data
                       if(this.datos[0] != undefined){
                         this.$router.push({
-                          path: '/Coordinador'
+                          path: '/Coordinador',
+                          query: this.datos[0]
                         })
                       }
                       else{

@@ -1,7 +1,7 @@
 <template>
 
   <section class="src-components-alumno">
-    <h1>src-components-alumno Component</h1>
+    <h1>Hola {{this.$route.query.nombre}} {{this.$route.query.apellido}}</h1>
   </section>
 
 </template>
@@ -10,9 +10,8 @@
 
   export default  {
     name: 'src-components-alumno',
-    props: [],
+    props: ['alumno'],
     mounted () {
-
     },
     data () {
       return {
