@@ -1,14 +1,31 @@
-/* eslint-disable no-console */
-import Servidor from './server/app.js'
-import Config from '../config.js'
+import Cliente from './clientProfesores.js'
+import Servidor from '../src/server/app.js'
+import DbClientFactory from "../src/server/db/DbClientFactory.js"
 
-const app = new Servidor()
 
+
+async function main() {
+
+    
+    const ipServidor = 'http://127.0.0.1'
+    
+    const app = new Servidor()
+    
+    
+    app.setOnReady(async (actualPort) => {
+        const cli = new Cliente(ipServidor, actualPort)
+        
+        console.log('Levantando servidor en ', actualPort)
+
+         
+        //await app.disconnect()
+        //process.exit(0)
+    })
+
+    app.start(8090)
+}
 
 //////////////////////////////////////////////////////////////
-
-// Esto esta para asegurarse que el servidor
-// siempre termine adecuadamente
 
 process.stdin.resume();//so the program will not close instantly
 
@@ -22,14 +39,13 @@ process.on('SIGINT', exitHandler.bind(null, { exit: true }));
 process.on('SIGUSR1', exitHandler.bind(null, { exit: true }));
 process.on('SIGUSR2', exitHandler.bind(null, { exit: true }));
 
-// catches uncaught exceptions
+//catches uncaught exceptions
 process.on('uncaughtException', exitHandler.bind(null, { exit: true }));
 
 async function exitHandler(options, exitCode) {
-    // await app.disconnect()
 
     if (options.cleanup) {
-        await app.disconnect()
+        await DbClientFactory.getDbClient().disconnect()
         console.log('\nprograma finalizado normalmente')
     }
     if (exitCode || exitCode === 0) {
@@ -42,8 +58,4 @@ async function exitHandler(options, exitCode) {
 
 /////////////////////////////////////////////////////////////////
 
-app.setOnReady(async (port) => {
-    console.log(`escuchando en puerto: ${port}`)
-})
-
-app.start(Config.port)
+main()

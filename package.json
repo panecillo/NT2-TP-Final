@@ -1,50 +1,32 @@
 {
-  "name": "tp-final",
-  "version": "0.1.0",
-  "private": true,
+  "type": "module",
+  "name": "tp4mio",
+  "version": "1.0.0",
+  "description": "",
+  "main": "node -r dotenv/config ./test/testProfesores.js dotenv_config_path=./.env",
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "testCoordinadores": "node -r dotenv/config ./test/testCoordinadores.js dotenv_config_path=./.env",
+    "testAlumnos": "node -r dotenv/config ./test/testAlumnos.js dotenv_config_path=./.env",
+    "testProfesores": "node -r dotenv/config ./test/testProfesores.js dotenv_config_path=./.env",
+    "testServer" : "node -r dotenv/config ./test/testServer.js dotenv_config_path=./.env"
   },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "dependencies": {
-    "axios": "^0.19.2",
-    "bootstrap": "^4.5.0",
-    "core-js": "^3.6.5",
-    "jquery": "^3.5.1",
-    "popper.js": "^1.16.1",
-    "vue": "^2.6.11",
-    "vue-axios": "^2.1.5",
-    "vue-form": "^4.10.3",
-    "vue-router": "^3.3.4",
-    "vuex": "^3.5.1"
+    "@hapi/joi": "^15.0.2",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "knex": "^0.21.1",
+    "mssql": "^6.2.0",
+    "mysql": "^2.18.1",
+    "request": "^2.88.2",
+    "request-promise-native": "^1.0.8",
+    "sqlite3": "^4.2.0",
+    "underscore": "^1.10.2"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "~4.4.0",
-    "@vue/cli-plugin-eslint": "~4.4.0",
-    "@vue/cli-service": "~4.4.0",
-    "babel-eslint": "^10.1.0",
-    "eslint": "^6.7.2",
-    "eslint-plugin-vue": "^6.2.2",
-    "vue-template-compiler": "^2.6.11"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/essential",
-      "eslint:recommended"
-    ],
-    "parserOptions": {
-      "parser": "babel-eslint"
-    },
-    "rules": {}
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not dead"
-  ]
+    "nodemon": "^2.0.4"
+  }
 }
