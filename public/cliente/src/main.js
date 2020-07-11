@@ -7,6 +7,7 @@ import './Dependencias/filters'
 import './Dependencias/form'
 import './Dependencias/bootstrap'
 import './Dependencias/httpClient'
+import './Dependencias/mixins'
 
 Vue.config.productionTip = false
 

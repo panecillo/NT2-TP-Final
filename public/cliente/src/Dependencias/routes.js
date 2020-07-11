@@ -18,10 +18,13 @@ import AlumnoOpcionesSolicitud from "../components/Alumno/AlumnoOpcionesSolicitu
 //---------------------------------------------------------------------------------------------------------
 
 import Profesor from "../components/Profesor/Profesor.vue";
-import ProfesorCursos from "../components/Profesor/ProfesorCursos.vue";
-import ProfesorHorarios from "../components/Profesor/ProfesorHorarios.vue";
-import ProfesorOpcionesDatos from "../components/Profesor/ProfesorOpcionesDatos.vue";
-import ProfesorOpcionesContacto from "../components/Profesor/ProfesorOpcionesContacto.vue";
+import CursosProfesor from "../components/Profesor/CursosProfesor.vue";
+import CursoDetalles from "../components/Profesor/CursoDetalles.vue";
+import OpcionesProfesor from "../components/Profesor/OpcionesProfesor.vue";
+import HorariosProfesor from "../components/Profesor/HorariosProfesor.vue";
+import CalificarAlumno from "../components/Profesor/CalificarAlumno.vue";
+import FormConsultasParaCoordinador from "../components/Profesor/FormConsultasParaCoordinador.vue"
+import FormCambioDatosProfesor from "../components/Profesor/FormCambioDatosProfesor.vue"
 
 //---------------------------------------------------------------------------------------------------------
 //                                              Coordinador
@@ -56,13 +59,14 @@ export default new VueRouter({
             {path: '/AlumnoOpcionesDatos', component: AlumnoOpcionesDatos},
             {path: '/AlumnoOpcionesSolicitud', component: AlumnoOpcionesSolicitud}
         ]},
-        {path: '/Profesor', component: Profesor,
-        children: [
-            {path: '/ProfesorCursos', component: ProfesorCursos},
-            {path: '/ProfesorHorarios', component: ProfesorHorarios},
-            {path: '/ProfesorOpcionesDatos', component: ProfesorOpcionesDatos},
-            {path: '/ProfesorOpcionesContacto', component: ProfesorOpcionesContacto}
-        ]},
+        {path: '/Profesor/:dni/', component: Profesor, props:true},
+        {path: '/CursosProfesor/:dni/:legajo', component: CursosProfesor, props:true},
+        {path: '/CursoDetalles/:idCurso/:nombreCurso/:dniProfesor/:legajo', component: CursoDetalles, props:true},
+        {path: '/OpcionesProfesor/:dni/:legajo', component: OpcionesProfesor, props:true},
+        {path: '/HorariosProfesor/:dni/:legajo', component: HorariosProfesor, props:true},
+        {path: '/CalificarAlumno/:dniProfesor/:legajo/:dniAlumno/:nombreAlumno/:apellidoAlumno', component: CalificarAlumno, props:true},
+        {path: '/FormConsultasParaCoordinador/:dni/:legajo', component: FormConsultasParaCoordinador, props:true},
+        {path: '/FormCambioDatosProfesor/:dni/:legajo', component: FormCambioDatosProfesor, props:true},
         {path: '/Coordinador', component: Coordinador,
         children: [
             {path: '/CoordinadorCursoListar', component: CoordinadorCursoListar},

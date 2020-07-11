@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import axios from 'axios'
 
 Vue.use(Vuex)
 
@@ -9,7 +10,12 @@ export default new Vuex.Store({
         curso: undefined,
         alumno: undefined,
         estoyConectado: false,
-        horarios: undefined
+        horarios: undefined,
+        urlBackend : process.env.NODE_ENV === 'production'? '': 'http://localhost:8090',
+        arrayAlumnos: [],
+        arrayTareas: [],
+        arrayProfesores: [],
+        arrayCoordinadores: [],
     },
     actions : {
         login({commit}, usuario) {
@@ -42,6 +48,33 @@ export default new Vuex.Store({
         cargaAlumno({commit}, alumno) {
             commit('cargaAlumno', alumno)
         },
+        actionCargarArrayProfesores()
+        {
+            axios(this.state.urlBackend+'/api/profesor/')
+            .then(rta => {
+                this.state.arrayProfesores = rta.data
+            })
+            .catch(error => console.log("Fallo: ", error))
+        },
+        actionCargarArrayCoordinadores()
+        {
+            axios(this.state.urlBackend+'/api/coordinador/')
+            .then(rta => {
+                this.state.arrayCoordinadores = rta.data
+            })
+            .catch(error => console.log("Fallo: ", error))
+        },
+        actionGetProfesor(dni) {
+            let resultado
+
+            this.state.arrayProfesores.forEach(profesor => {
+                    if ( profesor.dni == dni )
+                    {
+                        resultado = profesor
+                    }
+            });
+            return resultado
+        }
     },
     mutations : {
         login(state, usuario) {
