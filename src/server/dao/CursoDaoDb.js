@@ -128,7 +128,22 @@ class CursoDaoDb extends CursoDao {
         } catch (err) {
             throw new CustomError(400, 'Error al buscar los cursos', err)
         }
-        
+    }
+
+    async buscarCurso(idCurso) {
+        let curso
+        try {
+            const db = await this.client.getDb()
+            curso = await db.select().from('curso')
+            .join('nivel', 'nivel.idcurso', 'curso.idcurso')
+            .join('profesorescursos', 'profesorescursos.idcurso', 'curso.idcurso')
+            .join('empleadoslegajos', 'profesorescursos.legajo', 'empleadoslegajos.legajo')
+            .join('datoscontacto', 'empleadoslegajos.dni', 'datoscontacto.dni')
+            .where('curso.idcurso', '=', idCurso)
+            return curso
+        } catch (err) {
+            throw new CustomError(400, 'Error al buscar el curso', err)
+        }
     }
 }
 

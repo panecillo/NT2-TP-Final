@@ -9,6 +9,7 @@
         <th>Dificultad</th>
         <th>Profesor</th>
         <th>Detalles</th>
+        <th>Modificar</th>
       </tr>
       <tr v-for="(curso, idcurso) in cursos" :key="idcurso">
         <td> {{ curso.idcurso }} </td>
@@ -16,8 +17,13 @@
         <td> {{ curso.dificultad }} </td>
         <td> {{ curso.apellido }} {{ curso.nombre }}</td>
         <td> 
-          <router-link :to="`/CoordinadorDetallesCurso`">
+          <router-link :to="`/CoordinadorCursoDetalles`">
             <span v-on:click="cargarCurso(curso)">Detalles</span>
+          </router-link>
+        </td>
+        <td> 
+          <router-link :to="`/CoordinadorCursoModificacion`">
+            <span v-on:click="cargarCurso(curso)">Modificar</span>
           </router-link>
         </td>
       </tr>

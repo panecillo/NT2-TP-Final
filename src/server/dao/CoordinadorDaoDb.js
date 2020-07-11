@@ -279,6 +279,7 @@ class CoordinadorDaoDb extends CoordinadorDao {
             const db = await this.client.getDb()
             resultadoCarga= await db.insert({'idcurso':cursoNuevo.idcurso, 'nombrecurso':cursoNuevo.nombrecurso}).into('curso')
             await db.insert({'idcurso':cursoNuevo.idcurso, 'fechaclase':cursoNuevo.fechaclase}).into('horarioscurso')
+            await db.insert({'idcurso':cursoNuevo.idcurso, 'dificultad':cursoNuevo.dificultad}).into('nivel')
         }
         catch(error) {
         
@@ -315,6 +316,26 @@ class CoordinadorDaoDb extends CoordinadorDao {
         return resultado
     }
 
+    async modificarCurso(curso) {
+        let resultado
+        try {
+            const db = await this.client.getDb()
+            resultado = await db('curso')
+            .where('idcurso', '=', curso.idcurso)
+            .update({
+                nombrecurso: curso.nombrecurso 
+            })
+            await db('nivel')
+            .where('idcurso', '=', curso.idcurso)
+            .update({
+                dificultad: curso.dificultad 
+            })
+        }
+        catch(error) {       
+            throw new CustomError(400, 'Error modificar el Curso', err)     
+        }       
+        return resultado
+    }
 
 }
 

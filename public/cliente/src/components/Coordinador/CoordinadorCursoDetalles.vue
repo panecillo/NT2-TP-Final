@@ -95,7 +95,7 @@
       this.curso = this.$store.state.curso
       this.alumnos = this.getAlumnosCurso()
       this.horarios = this.getHorariosCurso()
-      this.temario = this.getTemarioCurso()
+      this.temario = this.getTemarioCurso()   
     },
     data () {
       return {
@@ -121,6 +121,8 @@
         .then( res => {
           console.log(res.data)
           this.horarios = res.data
+          this.$store.state.horarios = res.data
+          this.$store.dispatch('guardarCursoHorarios',this.horarios)
         })
         .catch(error => {
           console.log('ERROR GET HTTP', error)
@@ -142,7 +144,6 @@
     }
 }
 
-
 </script>
 
 <style scoped lang="css">
@@ -153,10 +154,14 @@
     padding-top: 20px;
     padding-bottom: 15px;
     margin-bottom: 10px;
-/*     background-color: lightblue; */
+
   }
   td {
-/*     background-color: lightblue; */
+    font-style: italic;
+    font-weight: 600;
   }
-
+  p {
+    font-style: italic;
+    font-weight: 600;
+  }
 </style>

@@ -6,7 +6,7 @@ import DbClientFactory from "../src/server/db/DbClientFactory.js"
 async function testbuscarTodos(cli){
     console.log("\nCorriendo test:  Obtener todos los todos los coordinadores")
     let rta = await cli.buscarTodos()
-    //console.log(rta)
+/*     console.log(rta) */
 
     if (rta.estado) {
         console.log("Test falla con error: ", rta.descripcion)
@@ -132,6 +132,7 @@ async function testCrearCursoNuevo(cli){
     let datoCurso =   {   
         idcurso: 284,
         nombrecurso: 'Ingles Tecnico 123',
+        dificultad: 'BASICO NUEVO',
         fechaclase: '2020-08-3 15:30:00',
     }
 
@@ -211,7 +212,7 @@ async function main() {
         process.exit(0)
     })
 
-    app.start(8080)
+    app.start(8090)
 }
 
 //////////////////////////////////////////////////////////////

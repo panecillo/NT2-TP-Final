@@ -73,6 +73,19 @@ class CoordinadorApi {
         }
     }
 
+    async modificarCurso(curso) {
+        let respuesta
+        try {
+            respuesta = await this.coordinadorDao.modificarCurso(curso)
+            return respuesta
+        } catch (err) {
+            if(!(err instanceof CustomError)){
+                throw new CustomError(400, 'Error modificar el Curso', err)
+            }
+            throw err
+        }
+    }
+
 }
 
 export default CoordinadorApi

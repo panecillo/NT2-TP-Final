@@ -72,6 +72,18 @@ function getCoordinadorRouter() {
 
     })
 
+    router.put('/modificarcurso/', async (req, res) => {
+        //res.send("agregar el curso " + req.body.curso + " al coordinador " + req.body.legajo)
+        let resultadoModificarCurso
+        try {
+            resultadoModificarCurso = await coordinadorApi.modificarCurso(req.body)
+            res.json(resultadoModificarCurso)
+        } catch (err) {
+            res.status(err.estado).json(err)
+        }
+
+    })
+
     
     router.post('/cursonuevo/', async (req, res) => {
         //res.send("agregar el curso " + req.body.curso + " al coordinador " + req.body.legajo)

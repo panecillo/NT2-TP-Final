@@ -7,7 +7,9 @@ export default new Vuex.Store({
     state : {
         usuario : undefined,
         curso: undefined,
-        estoyConectado: false
+        alumno: undefined,
+        estoyConectado: false,
+        horarios: undefined
     },
     actions : {
         login({commit}, usuario) {
@@ -33,7 +35,13 @@ export default new Vuex.Store({
         },
         toggleConectado({commit}) {
             commit('toggleConectado')
-        }
+        },
+        guardarCursoHorarios({commit}, horarios) {
+            commit('guardarCursoHorarios', horarios)
+        },
+        cargaAlumno({commit}, alumno) {
+            commit('cargaAlumno', alumno)
+        },
     },
     mutations : {
         login(state, usuario) {
@@ -83,6 +91,12 @@ export default new Vuex.Store({
         },
         toggleConectado(state) {
             state.estoyConectado = !state.estoyConectado
+        },
+        guardarCursoHorarios(state, horarios) {
+            state.horarios = horarios
+        },
+        cargaAlumno(state, alumno) {
+            state.alumno = alumno
         },
     }
 })

@@ -2,35 +2,44 @@ import Vue from  'vue'
 import VueRouter from 'vue-router'
 
 import Login from "../components/Login.vue";
+
 //---------------------------------------------------------------------------------------------------------
 //                                              Alumno
 //---------------------------------------------------------------------------------------------------------
+
 import Alumno from "../components/Alumno/Alumno.vue";
 import AlumnoCurso from "../components/Alumno/AlumnoCurso.vue";
 import AlumnoProfesor from "../components/Alumno/AlumnoProfesor.vue";
 import AlumnoOpcionesDatos from "../components/Alumno/AlumnoOpcionesDatos.vue";
 import AlumnoOpcionesSolicitud from "../components/Alumno/AlumnoOpcionesSolicitud.vue";
+
 //---------------------------------------------------------------------------------------------------------
 //                                              Profesor
 //---------------------------------------------------------------------------------------------------------
+
 import Profesor from "../components/Profesor/Profesor.vue";
 import ProfesorCursos from "../components/Profesor/ProfesorCursos.vue";
 import ProfesorHorarios from "../components/Profesor/ProfesorHorarios.vue";
 import ProfesorOpcionesDatos from "../components/Profesor/ProfesorOpcionesDatos.vue";
 import ProfesorOpcionesContacto from "../components/Profesor/ProfesorOpcionesContacto.vue";
+
 //---------------------------------------------------------------------------------------------------------
 //                                              Coordinador
 //---------------------------------------------------------------------------------------------------------
+
 import Coordinador from "../components/Coordinador/Coordinador.vue";
-import CoordinadorListarCursos from "../components/Coordinador/CoordinadorListarCursos.vue";
-import CoordinadorDetallesCurso from "../components/Coordinador/CoordinadorDetallesCurso.vue";
-import CoordinadorAltaCurso from "../components/Coordinador/CoordinadorAltaCurso.vue";
-import CoordinadorListarAlumnos from "../components/Coordinador/CoordinadorListarAlumnos.vue";
-import CoordinadorAltaAlumno from "../components/Coordinador/CoordinadorAltaAlumno.vue";
-import CoordinadorSolicitudes from "../components/Coordinador/CoordinadorSolicitudes.vue";
-import CoordinadorListarProfesores from "../components/Coordinador/CoordinadorListarProfesores.vue";
-import CoordinadorAltaProfesor from "../components/Coordinador/CoordinadorAltaProfesor.vue";
-import CoordinadorConsultas from "../components/Coordinador/CoordinadorConsultas.vue";
+import CoordinadorCursoListar from "../components/Coordinador/CoordinadorCursoListar.vue";
+import CoordinadorCursoDetalles from "../components/Coordinador/CoordinadorCursoDetalles.vue";
+import CoordinadorCursoAlta from "../components/Coordinador/CoordinadorCursoAlta.vue";
+import CoordinadorCursoModificacion from "../components/Coordinador/CoordinadorCursoModificacion.vue";
+import CoordinadorAlumnoListar from "../components/Coordinador/CoordinadorAlumnoListar.vue";
+import CoordinadorAlumnoDetalles from "../components/Coordinador/CoordinadorAlumnoDetalles.vue";
+import CoordinadorAlumnoAlta from "../components/Coordinador/CoordinadorAlumnoAlta.vue";
+import CoordinadorAlumnoModificacion from "../components/Coordinador/CoordinadorAlumnoModificacion.vue";
+import CoordinadorAlumnoSolicitudes from "../components/Coordinador/CoordinadorAlumnoSolicitudes.vue";
+import CoordinadorProfesorListar from "../components/Coordinador/CoordinadorProfesorListar.vue";
+import CoordinadorProfesorAlta from "../components/Coordinador/CoordinadorProfesorAlta.vue";
+import CoordinadorProfesorConsultas from "../components/Coordinador/CoordinadorProfesorConsultas.vue";
 import CoordinadorOpcionesDatos from "../components/Coordinador/CoordinadorOpcionesDatos.vue";
 
 Vue.use(VueRouter)
@@ -56,15 +65,18 @@ export default new VueRouter({
         ]},
         {path: '/Coordinador', component: Coordinador,
         children: [
-            {path: '/CoordinadorListarCursos', component: CoordinadorListarCursos},
-            {path: '/CoordinadorAltaCurso', component: CoordinadorAltaCurso},
-            {path: '/CoordinadorDetallesCurso', component: CoordinadorDetallesCurso},
-            {path: '/CoordinadorListarAlumnos', component: CoordinadorListarAlumnos},
-            {path: '/CoordinadorAltaAlumno', component: CoordinadorAltaAlumno},
-            {path: '/CoordinadorSolicitudes', component: CoordinadorSolicitudes},
-            {path: '/CoordinadorListarProfesores', component: CoordinadorListarProfesores},
-            {path: '/CoordinadorAltaProfesor', component: CoordinadorAltaProfesor},
-            {path: '/CoordinadorConsultas', component: CoordinadorConsultas},
+            {path: '/CoordinadorCursoListar', component: CoordinadorCursoListar},
+            {path: '/CoordinadorCursoAlta', component: CoordinadorCursoAlta},
+            {path: '/CoordinadorCursoModificacion', component: CoordinadorCursoModificacion},
+            {path: '/CoordinadorCursoDetalles', component: CoordinadorCursoDetalles},
+            {path: '/CoordinadorAlumnoListar', component: CoordinadorAlumnoListar},
+            {path: '/CoordinadorAlumnoAlta', component: CoordinadorAlumnoAlta},
+            {path: '/CoordinadorAlumnoModificacion', component: CoordinadorAlumnoModificacion},
+            {path: '/CoordinadorAlumnoDetalles', component: CoordinadorAlumnoDetalles},
+            {path: '/CoordinadorAlumnoSolicitudes', component: CoordinadorAlumnoSolicitudes},
+            {path: '/CoordinadorProfesorListar', component: CoordinadorProfesorListar},
+            {path: '/CoordinadorProfesorAlta', component: CoordinadorProfesorAlta},
+            {path: '/CoordinadorProfesorConsultas', component: CoordinadorProfesorConsultas},
             {path: '/CoordinadorOpcionesDatos', component: CoordinadorOpcionesDatos}
         ]},
     ]

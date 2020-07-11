@@ -27,14 +27,27 @@ class CursoApi {
         return temas
     }
 
-    async buscarCursos() {
+    async buscarCursos(idCurso) {
+        let cursos
         try {
-            let cursos
             cursos = await this.cursoDao.buscarCursos()
             return cursos
         } catch(err){
             if(!(err instanceof CustomError)){
                 throw new CustomError(400, 'Error al agregar curso al alumno', err)
+            }
+            throw err
+        }
+    }
+
+    async buscarCurso(idCurso) {
+        try {
+            let curso
+            curso = await this.cursoDao.buscarCurso(idCurso)
+            return curso
+        } catch(err){
+            if(!(err instanceof CustomError)){
+                throw new CustomError(400, 'Error al buscar el curso', err)
             }
             throw err
         }

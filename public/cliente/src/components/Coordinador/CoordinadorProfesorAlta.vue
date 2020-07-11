@@ -1,7 +1,6 @@
 <template>
 
   <section class="src-components-coordinador-alta-profesor">
-    <h2>hola desde coordinador alta profesor</h2>
     <Header texto="Alta de Profesor"/>
   </section>
 

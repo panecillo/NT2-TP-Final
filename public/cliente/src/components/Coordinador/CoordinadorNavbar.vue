@@ -19,12 +19,12 @@
             </a>
             <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdownMenuLink">
               <a>
-                <router-link to="/CoordinadorListarCursos" tag="a"> 
+                <router-link to="/CoordinadorCursoListar" tag="a"> 
                   <a class="nav-link" href="#">Listar Cursos</a>
                 </router-link>
               </a>
               <a>
-                <router-link to="/CoordinadorAltaCurso" tag="a"> 
+                <router-link to="/CoordinadorCursoAlta" tag="a"> 
                   <a class="nav-link" href="#">Alta de Curso</a>
                 </router-link>
               </a>
@@ -36,17 +36,17 @@
             </a>
             <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdownMenuLink">
               <a>
-                <router-link to="/CoordinadorListarAlumnos" tag="a"> 
+                <router-link to="/CoordinadorAlumnoListar" tag="a"> 
                   <a class="nav-link" href="#">Listar Alumnos</a>
                 </router-link>
               </a>
               <a>
-                <router-link to="/CoordinadorAltaAlumno" tag="a"> 
+                <router-link to="/CoordinadorAlumnoAlta" tag="a"> 
                   <a class="nav-link" href="#">Alta de Alumno</a>
                 </router-link>
               </a>
               <a>
-                <router-link to="/CoordinadorSolicitudes" tag="a"> 
+                <router-link to="/CoordinadorAlumnoSolicitudes" tag="a"> 
                   <a class="nav-link" href="#">Solicitudes</a>
                 </router-link>
               </a>
@@ -58,17 +58,17 @@
             </a>
             <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdownMenuLink">
               <a>
-                <router-link to="/CoordinadorListarProfesores" tag="a"> 
+                <router-link to="/CoordinadorProfesorListar" tag="a"> 
                   <a class="nav-link" href="#">Listar Profesores</a>
                 </router-link>
               </a>
               <a>
-                <router-link to="/CoordinadorAltaProfesor" tag="a"> 
+                <router-link to="/CoordinadorProfesorAlta" tag="a"> 
                   <a class="nav-link" href="#">Alta de Profesor</a>
                 </router-link>
               </a>
               <a>
-                <router-link to="/CoordinadorConsultas" tag="a"> 
+                <router-link to="/CoordinadorProfesorConsultas" tag="a"> 
                   <a class="nav-link" href="#">Consultas</a>
                 </router-link>
               </a>
