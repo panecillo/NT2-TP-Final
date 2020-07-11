@@ -42,7 +42,7 @@
           </li>
           <li class="nav-item">
             <router-link to="/" tag="li"> 
-              <a class="nav-link" href="#">Cerrar Sesion</a>
+              <a class="nav-link" href="#" @click="toggleConectado()">Cerrar Sesion</a>
             </router-link>
           </li>
         </ul>
@@ -66,7 +66,9 @@
       }
     },
     methods: {
-
+      toggleConectado(){
+        this.$store.dispatch('toggleConectado')
+      }
     },
     computed: {
 

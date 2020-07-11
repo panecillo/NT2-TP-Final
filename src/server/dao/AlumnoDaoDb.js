@@ -68,7 +68,6 @@ class AlumnoDaoDb extends AlumnoDao {
 
     async listarAlumnos(){
         try{
-            console.log("hola alumnos dao")
             const db = await this.client.getDb()
             const alumnos = await db.select().from('estudiante').join('datoscontacto', 'datoscontacto.dni', 'estudiante.dni')
             return alumnos

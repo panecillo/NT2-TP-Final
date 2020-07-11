@@ -55,7 +55,7 @@
   import { urlAlumnos }  from '../Dependencias/urls'
   import { urlProfesores }  from '../Dependencias/urls'
   import { urlCoordinadores }  from '../Dependencias/urls'
-  import BarraSuperior from './Auxiliares/BarraSuperiorLogin.vue'
+  import BarraSuperior from './Auxiliares/BarraSuperior.vue'
 
   export default  {
     name: 'src-components-login',
@@ -91,6 +91,7 @@
               if(this.datos[0] != undefined){
                 this.$store.dispatch('login',this.datos[0])
                 this.$store.dispatch('guardarAlumnoLocalStorage')
+                this.$store.dispatch('toggleConectado')
                 this.$router.push({
                     path: '/Alumno',
                 })
@@ -102,6 +103,7 @@
                   if(this.datos[0] != undefined){
                     this.$store.dispatch('login',this.datos[0])
                     this.$store.dispatch('guardarEmpleadoLocalStorage')
+                    this.$store.dispatch('toggleConectado')
                     this.$router.push({
                         path: '/Profesor',
                     })
@@ -113,6 +115,7 @@
                       if(this.datos[0] != undefined){
                         this.$store.dispatch('login',this.datos[0])
                         this.$store.dispatch('guardarEmpleadoLocalStorage')
+                        this.$store.dispatch('toggleConectado')
                         this.$router.push({
                           path: '/Coordinador',
                         })

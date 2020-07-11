@@ -2,19 +2,25 @@ import Vue from  'vue'
 import VueRouter from 'vue-router'
 
 import Login from "../components/Login.vue";
-
+//---------------------------------------------------------------------------------------------------------
+//                                              Alumno
+//---------------------------------------------------------------------------------------------------------
 import Alumno from "../components/Alumno/Alumno.vue";
 import AlumnoCurso from "../components/Alumno/AlumnoCurso.vue";
 import AlumnoProfesor from "../components/Alumno/AlumnoProfesor.vue";
 import AlumnoOpcionesDatos from "../components/Alumno/AlumnoOpcionesDatos.vue";
 import AlumnoOpcionesSolicitud from "../components/Alumno/AlumnoOpcionesSolicitud.vue";
-
+//---------------------------------------------------------------------------------------------------------
+//                                              Profesor
+//---------------------------------------------------------------------------------------------------------
 import Profesor from "../components/Profesor/Profesor.vue";
 import ProfesorCursos from "../components/Profesor/ProfesorCursos.vue";
 import ProfesorHorarios from "../components/Profesor/ProfesorHorarios.vue";
 import ProfesorOpcionesDatos from "../components/Profesor/ProfesorOpcionesDatos.vue";
 import ProfesorOpcionesContacto from "../components/Profesor/ProfesorOpcionesContacto.vue";
-
+//---------------------------------------------------------------------------------------------------------
+//                                              Coordinador
+//---------------------------------------------------------------------------------------------------------
 import Coordinador from "../components/Coordinador/Coordinador.vue";
 import CoordinadorListarCursos from "../components/Coordinador/CoordinadorListarCursos.vue";
 import CoordinadorDetallesCurso from "../components/Coordinador/CoordinadorDetallesCurso.vue";
@@ -33,6 +39,7 @@ export default new VueRouter({
     mode: 'history',
     routes: [
         {path: '/', redirect: '/Login'},
+        {path: '/Login', component: Login},
         {path: '/Alumno', component: Alumno,
         children: [
             {path: '/AlumnoCurso', component: AlumnoCurso},
@@ -40,7 +47,6 @@ export default new VueRouter({
             {path: '/AlumnoOpcionesDatos', component: AlumnoOpcionesDatos},
             {path: '/AlumnoOpcionesSolicitud', component: AlumnoOpcionesSolicitud}
         ]},
-        {path: '/Login', component: Login},
         {path: '/Profesor', component: Profesor,
         children: [
             {path: '/ProfesorCursos', component: ProfesorCursos},

@@ -1,16 +1,16 @@
 <template>
 
   <section class="src-components-barra-superior">
-    <div class="back">
+    <div v-if="this.$store.state.estoyConectado != false" class="back">
       <img src="../../../public/backArrow.png" width="54" heigth="54" alt="Atras" @click="irAtras()">
     </div>
-    <div class="forward">
+    <div v-if="this.$store.state.estoyConectado != false" class="forward">
       <img src="../../../public/forwardArrow.png" width="54" heigth="54" alt="Adelante" @click="irAdelante()">
     </div>
     <div class="logo">
       <img src="../../../public/logoInstituto.png" width="150" height="54" alt="Instituto ORTBRIDGE">
     </div>
-    <div class="cabecera">
+    <div v-if="this.$store.state.estoyConectado != false" class="cabecera">
       <p>{{tipoUsuario}}: {{apellido}} {{nombre}}</p>
     </div>
   </section>
