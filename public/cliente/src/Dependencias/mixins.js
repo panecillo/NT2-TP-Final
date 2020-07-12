@@ -10,6 +10,21 @@ var miMixin = {
     {
       this.$store.dispatch('actionPostearAlumnoAxios', post)
     },
+
+    recuperarEmpleadoLocalStorage() 
+    {
+      this.$store.dispatch('recuperarEmpleadoLocalStorage')
+    },
+
+    getDniEmpleado() 
+    {
+      return this.$store.state.usuario.dni
+    },
+
+    getLegajoEmpleado()
+    {
+      return this.$store.state.usuario.legajo
+    }
     
 
   },

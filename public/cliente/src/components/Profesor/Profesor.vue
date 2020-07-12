@@ -137,16 +137,17 @@
     props: [],
     beforeCreate() {
       // Cargo en el local storage los datos del usuario
-      this.$store.dispatch('recuperarEmpleadoLocalStorage')
+      // usando mixins
+      this.recuperarEmpleadoLocalStorage
       
     },
     mounted () {
       // Mixins
       this.cargarArrayProfesores
 
-      // Cargo los datos con info que quedo guardada en el local storage
-      this.dni = this.$store.state.usuario.dni
-      this.legajo = this.$store.state.usuario.legajo
+      // Cargo los datos con info que quedo guardada en el local storage usando mixins
+      this.dni = this.getDniEmpleado()
+      this.legajo = this.getLegajoEmpleado()
     },
     data () {
       return {
