@@ -4,7 +4,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="nav-item">
-        <router-link to="/Profesor" tag="div"> 
+        <router-link :to="`/Profesor/${dni}`">
           <a class="navbar-brand" href="#">Inicio</a>
         </router-link>
       </div>
@@ -14,31 +14,19 @@
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <router-link to="/ProfesorCursos" tag="li"> 
+            <router-link :to="`/CursosProfesor/${dni}/${legajo}`">
               <a class="nav-link" href="#">Mis Cursos</a>
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/ProfesorHorarios" tag="li"> 
+            <router-link :to="`/HorariosProfesor/${dni}/${legajo}`">
               <a class="nav-link" href="#">Mis Horarios</a>
             </router-link>
           </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Opciones
-            </a>
-            <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdownMenuLink">
-              <a>
-                <router-link to="/ProfesorOpcionesDatos" tag="a"> 
-                  <a class="nav-link" href="#">Datos Personales</a>
-                </router-link>
-              </a>
-              <a>
-                <router-link to="/ProfesorOpcionesContacto" tag="a"> 
-                  <a class="nav-link" href="#">Contacto</a>
-                </router-link>
-              </a>
-            </div>
+          <li class="nav-item">
+            <router-link :to="`/OpcionesProfesor/${dni}/${legajo}`">
+              <a class="nav-link" href="#">Opciones</a>
+            </router-link>
           </li>
           <li class="nav-item">
             <router-link to="/" tag="li"> 
@@ -57,7 +45,7 @@
 
   export default  {
     name: 'src-components-profesor-navbar',
-    props: ['profesor-navbar'],
+    props: ['dni','legajo'],
     mounted () {
     },
     data () {

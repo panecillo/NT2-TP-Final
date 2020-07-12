@@ -2,18 +2,15 @@
 
   <section class="src-components-curso-detalles">
 
-    <div class="jumbotron mt-3" :style="cssChequearEstadoButton()">
-        
-        <NavbarProfesor 
-              :dni="this.dniProfesor" 
-              :legajo="this.legajo"
-              @estadoButtonNav="mostrarCont($event)"
+    <div class="jumbotron mt-3">
+
+        <BarraSuperior/>  
+        <ProfesorNavbar
+                :dni="this.dniProfesor" 
+                :legajo="this.legajo"
         />
 
-      <img src="../../public/logoInstituto.png" width="300" height="100" />
-      <img src="../../public/images1.jpg" width="200" height="100" align="right" />
-      <hr />
-      
+        <br>
         <h4>Detalles del curso:  {{nombreCurso}}</h4>
         <h4>Id del curso:  {{idCurso}}</h4>
 
@@ -137,12 +134,14 @@
 
 <script lang="js">
 
-  import NavbarProfesor from "./NavbarProfesor.vue"
+  import ProfesorNavbar from "./ProfesorNavbar.vue"
+  import BarraSuperior from "../Auxiliares/BarraSuperior.vue"
 
   export default  {
     name: 'src-components-curso-detalles',
     components: {
-      NavbarProfesor
+      ProfesorNavbar,
+      BarraSuperior
     },
     props: ['idCurso', 'nombreCurso', 'dniProfesor', 'legajo'],
     mounted () {

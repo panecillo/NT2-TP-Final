@@ -2,17 +2,15 @@
 
   <section class="src-components-calificar-alumno">
     
-    <div class="jumbotron mt-3" :style="cssChequearEstadoButton()">
+    <div class="jumbotron mt-3">
         
-        <NavbarProfesor 
+        <BarraSuperior/>
+        <ProfesorNavbar
           :dni="this.dniProfesor" 
           :legajo="this.legajo"
-          @estadoButtonNav="mostrarCont($event)"
         />
 
-        <img src="../../public/logoInstituto.png" width="300" height="100" />
-        <img src="../../public/images1.jpg" width="200" height="100" align="right" />
-        <hr />
+        <br>
 
         <h4> Calificar Alumno: {{ apellidoAlumno }}, {{ nombreAlumno }} </h4>
         <h4> DNI: {{ dniAlumno }}</h4>
@@ -153,12 +151,14 @@
 
 <script lang="js">
 
-  import NavbarProfesor from "./NavbarProfesor.vue"
+  import BarraSuperior from "../Auxiliares/BarraSuperior.vue"
+  import ProfesorNavbar from "./ProfesorNavbar.vue"
 
   export default  {
     name: 'src-components-calificar-alumno',
     components: {
-      NavbarProfesor
+      ProfesorNavbar,
+      BarraSuperior
     },
     props: ['dniProfesor','legajo','dniAlumno','nombreAlumno','apellidoAlumno'],
     mounted () {
@@ -218,8 +218,8 @@
         // Reseteo
         this.recargarFormulario()
         this.formState._reset()
-
-
+        
+        this.recargarFormulario()
       },
 
       cssChequearEstadoButton() {

@@ -1,27 +1,23 @@
 <template>
   <section class="src-components-profesor">
 
-    
-    
+    <div class="jumbotron mt-3" >
 
-    <div class="jumbotron mt-3" :style="cssChequearEstadoButton()">
-   
-      <NavbarProfesor
+      <BarraSuperior/>
+      <ProfesorNavbar
         :dni="this.dni"
         :legajo="this.getMyLegajo"
-        @estadoButtonNav="mostrarCont($event)"
       />
-
-      <img src="../../public/logoInstituto.png" width="300" height="100" />
-      <img src="../../public/images1.jpg" width="200" height="100" align="right" />
-      <hr />
+      <router-view></router-view>
   
+
       <div v-if="this.getMyData">
+        <br>
         <h1>Bienvenido, {{this.getMyData.nombre}} {{this.getMyData.apellido}}</h1>
         <hr />
       </div>
 
-      Este es el Portal de Profesores, desde la barra lateral podrás gestionar tus cursos, calificar a tus
+      Este es el Portal de Profesores, desde la barra superior podrás gestionar tus cursos, calificar a tus
       estudiantes, visualizar tus próximas clases o realizar cambios en tu perfil desde el menú de opciones
 
       <hr>
@@ -129,18 +125,17 @@
 
 <script lang="js">
 
-  //const url = process.env.NODE_ENV === 'production'? '': 'http://localhost:8090'
-  import NavbarProfesor from "./NavbarProfesor.vue"
+  import ProfesorNavbar from "./ProfesorNavbar.vue"
+  import BarraSuperior from "../Auxiliares/BarraSuperior.vue"
 
   export default  {
     name: 'src-components-profesor',
     components: {
-      NavbarProfesor
+      ProfesorNavbar,
+      BarraSuperior
     },
     props: ['dni'],
     mounted () {
-      //this.$store.dispatch('actionCargarArrayProfesores')
-      
       // Mixins
       this.cargarArrayProfesores
     },

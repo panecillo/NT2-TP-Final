@@ -2,18 +2,15 @@
 
   <section class="src-components-opciones-profesor">
     
-    <div class="jumbotron mt-3" :style="cssChequearEstadoButton()">
-        
-        <NavbarProfesor 
-                  :dni="this.dni" 
-                  :legajo="this.legajo"
-                  @estadoButtonNav="mostrarCont($event)"
-        />
+    <div class="jumbotron mt-3" >
 
-        <img src="../../public/logoInstituto.png" width="300" height="100" />
-        <img src="../../public/images1.jpg" width="200" height="100" align="right" />
-        <hr />
-        
+      <BarraSuperior/>
+      <ProfesorNavbar
+        :dni="this.dni"
+        :legajo="this.legajo"
+      />
+      <router-view></router-view>
+      <br>
         <ul class="nav nav-tabs" id="myTab" role="tablist">
           <li class="nav-item">
             <a
@@ -47,9 +44,8 @@
             role="tabpanel"
             aria-labelledby="home-tab"
           >
-                    <hr>
+                    <br>
                     <h4> Mis Datos Personales</h4>
-                    
                     <br>
                     <br>
                     <FormCambioDatosProfesor :dni="this.dni" :legajo="this.legajo"/>
@@ -59,10 +55,8 @@
 
           <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 
-                  <hr>
+                  <br>
                   <h4> Contactar al Coordinador </h4>
-                  
-
                   <br>
                   <br>
                   <FormConsultasParaCoordinador :dni="this.dni" :legajo="this.legajo"/>
@@ -97,14 +91,16 @@
 
 <script lang="js">
 
-  import NavbarProfesor from "./NavbarProfesor.vue"
+  import ProfesorNavbar from "./ProfesorNavbar.vue"
   import FormConsultasParaCoordinador from "./FormConsultasParaCoordinador.vue"
   import FormCambioDatosProfesor from "./FormCambioDatosProfesor.vue"
+  import BarraSuperior from "../Auxiliares/BarraSuperior.vue"
 
   export default  {
     name: 'src-components-opciones-profesor',
     components: {
-      NavbarProfesor,
+      BarraSuperior,
+      ProfesorNavbar,
       FormConsultasParaCoordinador,
       FormCambioDatosProfesor
     },
