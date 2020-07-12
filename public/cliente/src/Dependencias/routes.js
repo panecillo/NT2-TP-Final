@@ -59,7 +59,7 @@ export default new VueRouter({
             {path: '/AlumnoOpcionesDatos', component: AlumnoOpcionesDatos},
             {path: '/AlumnoOpcionesSolicitud', component: AlumnoOpcionesSolicitud}
         ]},
-        {path: '/Profesor/:dni/', component: Profesor, props:true},
+        {path: '/Profesor', component: Profesor},
         {path: '/CursosProfesor/:dni/:legajo', component: CursosProfesor, props:true},
         {path: '/CursoDetalles/:idCurso/:nombreCurso/:dniProfesor/:legajo', component: CursoDetalles, props:true},
         {path: '/OpcionesProfesor/:dni/:legajo', component: OpcionesProfesor, props:true},

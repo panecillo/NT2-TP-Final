@@ -105,7 +105,7 @@
                     this.$store.dispatch('guardarEmpleadoLocalStorage')
                     this.$store.dispatch('toggleConectado')
                     this.$router.push({
-                        path: '/Profesor/' + this.formData.user,
+                        path: '/Profesor',
                     })
                   }
                   else{

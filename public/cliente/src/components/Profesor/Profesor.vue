@@ -6,7 +6,7 @@
       <BarraSuperior/>
       <ProfesorNavbar
         :dni="this.dni"
-        :legajo="this.getMyLegajo"
+        :legajo="this.legajo"
       />
       <router-view></router-view>
   
@@ -134,14 +134,25 @@
       ProfesorNavbar,
       BarraSuperior
     },
-    props: ['dni'],
+    props: [],
+    beforeCreate() {
+      // Cargo en el local storage los datos del usuario
+      this.$store.dispatch('recuperarEmpleadoLocalStorage')
+      
+    },
     mounted () {
       // Mixins
       this.cargarArrayProfesores
+
+      // Cargo los datos con info que quedo guardada en el local storage
+      this.dni = this.$store.state.usuario.dni
+      this.legajo = this.$store.state.usuario.legajo
     },
     data () {
       return {
         estadoButton: true,
+        dni: -1,
+        legajo: -1,
         misDatos: {}
       }
     },

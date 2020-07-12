@@ -4,7 +4,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="nav-item">
-        <router-link :to="`/Profesor/${dni}`">
+        <router-link :to="`/Profesor`">
           <a class="navbar-brand" href="#">Inicio</a>
         </router-link>
       </div>
