@@ -4,6 +4,8 @@
     <BarraSuperior/>
     <AlumnoNavbar/> 
     <router-view></router-view>
+    <Footer/>
+
   </section>
 
 </template>
@@ -12,12 +14,14 @@
 
   import AlumnoNavbar from "./AlumnoNavbar.vue";
   import BarraSuperior from "../Auxiliares/BarraSuperior.vue"
+  import Footer from "../Auxiliares/Footer.vue"
 
   export default  {
     name: 'src-components-alumno',
     components: {
       AlumnoNavbar,
-      BarraSuperior
+      BarraSuperior,
+      Footer
     },
     props: [],
     beforeCreate() {

@@ -27,7 +27,7 @@ class CursoApi {
         return temas
     }
 
-    async buscarCursos(idCurso) {
+    async buscarCursos() {
         let cursos
         try {
             cursos = await this.cursoDao.buscarCursos()

@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import axios from 'axios'
 
 Vue.use(Vuex)
 
@@ -9,13 +8,15 @@ export default new Vuex.Store({
         usuario : undefined,
         curso: undefined,
         alumno: undefined,
+        alumnos: undefined,
+        pforesor: undefined,
+        consulta: undefined,
+        cursos: undefined,
         estoyConectado: false,
         horarios: undefined,
-        urlBackend : process.env.NODE_ENV === 'production'? '': 'http://localhost:8090',
-        arrayAlumnos: [],
-        arrayTareas: [],
-        arrayProfesores: [],
-        arrayCoordinadores: [],
+        horariosProfesor: undefined,
+        solicitudes: undefined,
+        solicitud: undefined
     },
     actions : {
         login({commit}, usuario) {
@@ -39,6 +40,9 @@ export default new Vuex.Store({
         cargarCurso({commit}, curso) {
             commit('cargarCurso', curso)
         },
+        cargarCursos({commit}, cursos) {
+            commit('cargarCursos', cursos)
+        },
         toggleConectado({commit}) {
             commit('toggleConectado')
         },
@@ -48,33 +52,27 @@ export default new Vuex.Store({
         cargaAlumno({commit}, alumno) {
             commit('cargaAlumno', alumno)
         },
-        actionCargarArrayProfesores()
-        {
-            axios(this.state.urlBackend+'/api/profesor/')
-            .then(rta => {
-                this.state.arrayProfesores = rta.data
-            })
-            .catch(error => console.log("Fallo: ", error))
+        cargaAlumnos({commit}, alumnos) {
+            commit('cargaAlumnos', alumnos)
         },
-        actionCargarArrayCoordinadores()
-        {
-            axios(this.state.urlBackend+'/api/coordinador/')
-            .then(rta => {
-                this.state.arrayCoordinadores = rta.data
-            })
-            .catch(error => console.log("Fallo: ", error))
+        cargaProfesor({commit}, profesor) {
+            commit('cargaProfesor', profesor)
         },
-        actionGetProfesor(dni) {
-            let resultado
-
-            this.state.arrayProfesores.forEach(profesor => {
-                    if ( profesor.dni == dni )
-                    {
-                        resultado = profesor
-                    }
-            });
-            return resultado
-        }
+        guardarHorariosProfesor({commit}, horarios) {
+            commit('guardarHorariosProfesor', horarios)
+        },
+        cargaConsulta({commit}, consulta) {
+            commit('cargarConsulta', consulta)
+        },
+        actualizarUsuarioCoordinador({commit}, coordinador) {
+            commit('actualizarUsuarioCoordinador', coordinador)
+        },
+        cargaSolicitudes({commit}, solicitudes) {
+            commit('cargaSolicitudes', solicitudes)
+        },
+        cargaSolicitud({commit}, solicitud) {
+            commit('cargaSolicitud', solicitud)
+        },
     },
     mutations : {
         login(state, usuario) {
@@ -87,6 +85,7 @@ export default new Vuex.Store({
             localStorage.setItem('direccion',state.usuario.direccion)
             localStorage.setItem('email',state.usuario.email)
             localStorage.setItem('telefono',state.usuario.telefono)
+            localStorage.setItem('idcurso',state.usuario.idcurso)
         },
         recuperarAlumnoLocalStorage(state) {
             state.usuario.dni = localStorage.getItem('dni')
@@ -95,6 +94,7 @@ export default new Vuex.Store({
             state.usuario.direccion = localStorage.getItem('direccion')
             state.usuario.email = localStorage.getItem('email')
             state.usuario.telefono = localStorage.getItem('telefono')
+            state.usuario.idcurso = localStorage.getItem('idcurso')
         },
         cargarEmpleadoEnLocalStorage(state) {
             localStorage.setItem('dni',state.usuario.dni )
@@ -122,6 +122,9 @@ export default new Vuex.Store({
         cargarCurso(state, curso) {
             state.curso = curso
         },
+        cargarCursos(state, cursos) {
+            state.cursos = cursos
+        },
         toggleConectado(state) {
             state.estoyConectado = !state.estoyConectado
         },
@@ -131,5 +134,30 @@ export default new Vuex.Store({
         cargaAlumno(state, alumno) {
             state.alumno = alumno
         },
+        cargaAlumnos(state, alumnos) {
+            state.alumnos = alumnos
+        },
+        cargaProfesor(state, profesor) {
+            state.profesor = profesor
+        },
+        guardarHorariosProfesor(state, horarios) {
+            state.horariosProfesor = horarios
+        },
+        cargarConsulta(state, consulta) {
+            state.consulta = consulta
+        },
+        actualizarUsuarioCoordinador(state, coordinador) {
+            state.usuario.apellido = coordinador.apellido
+            state.usuario.nombre = coordinador.nombre
+            state.usuario.direccion = coordinador.direccion
+            state.usuario.email = coordinador.email
+            state.usuario.telefono = coordinador.telefono
+        },
+        cargaSolicitudes(state, solicitudes) {
+            state.solicitudes = solicitudes
+        },
+        cargaSolicitud(state, solicitud) {
+            state.solicitud = solicitud
+        }
     }
 })

@@ -48,7 +48,6 @@ class DatosContacto {
         }
         const { err } = Joi.validate(datosContacto, datosContactoSchema)
         if (err) {
-            console.log("hay errores en validarDatosContacto")
             throw err
         }
     }

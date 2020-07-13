@@ -89,11 +89,11 @@ class Cliente {
         return cliDTO
     }
 
-    async asignarCursoAlumnoComoCoordinador(curso, dni) {
+    async asignarCursoAlumnoComoCoordinador(datos) {
         const cliDTO = await request({
             method: 'PUT',
             uri: this.serverUrl + '/cursoalumnocomocoordinador/',
-            body: {curso, dni},
+            body: datos,
             json: true
         })
         return cliDTO

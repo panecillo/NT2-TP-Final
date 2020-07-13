@@ -1,19 +1,19 @@
 <template>
 
-  <section class="src-components-coordinador-listar-cursos">
+  <section class="src-components-profesor-curso-detalle" v-if="$store.state.curso && $store.state.alumnos">
 
     <Header texto="Datos del Curso"/>
 
     <div class="jumbotron">
-      <p>Id: {{ curso.idcurso }}</p>
-      <p>Nombre: {{ curso.nombrecurso }}</p>
-      <p>Nivel: {{ curso.dificultad }}</p>
-      <p>Profesor: {{ curso.apellido }} {{ curso.nombre }}</p>
+      <p>Id: {{ this.$store.state.curso.idcurso }}</p>
+      <p>Nombre: {{ this.$store.state.curso.nombrecurso }}</p>
+      <p>Nivel: {{ this.$store.state.curso.dificultad }}</p>
+      <p>Profesor: {{ this.$store.state.curso.apellido }} {{ this.$store.state.curso.nombre }}</p>
     </div>
 
     <Header texto="Alumnos Inscriptos"/>
 
-    <div v-if="alumnos != undefined && alumnos.length">
+    <div v-if="alumnos != undefined && this.$store.state.alumnos.length">
       <table class="table">
         <tr class="thead-dark">
           <th>Dni</th>
@@ -22,14 +22,20 @@
           <th>Nota 1</th>
           <th>Nota 2</th>
           <th>Nota Final</th>
+          <th>Modificar Notas</th>
         </tr>
-        <tr v-for="(alumno, dni) in alumnos" :key="dni">
+        <tr v-for="(alumno, dni) in this.$store.state.alumnos" :key="dni">
           <td> {{ alumno.dni }} </td>
           <td> {{ alumno.apellido }} {{ alumno.nombre }}</td>
           <td> {{ alumno.email }} </td>
           <td> {{ alumno.nota1 }} </td>
           <td> {{ alumno.nota2 }} </td>
           <td> {{ alumno.notafinal }} </td>
+          <td> 
+          <router-link :to="`/ProfesorNotas`">
+            <span v-on:click="cargarAlumno(alumno)">Modificar</span>
+          </router-link>
+        </td>
         </tr>
       </table>
     </div>
@@ -86,14 +92,14 @@
   import { urlCursos } from '../../Dependencias/urls'
 
   export default  {
-    name: 'src-components-coordinador-listar-cursos',
+    name: 'src-components-profesor-curso-detalle',
     props: [],
     components: {
       Header
     },
     mounted () {
       this.curso = this.$store.state.curso
-      this.alumnos = this.getAlumnosCurso()
+      this.getAlumnosCurso()
       this.horarios = this.getHorariosCurso()
       this.temario = this.getTemarioCurso()   
     },
@@ -109,7 +115,7 @@
       getAlumnosCurso() {
         this.axios.get(urlCursos + this.curso.idcurso)
         .then( res => {
-          this.alumnos = res.data
+          this.$store.dispatch('cargaAlumnos', res.data)
         })
         .catch(error => {
           console.log('ERROR GET HTTP', error)
@@ -134,6 +140,9 @@
           console.log('ERROR GET HTTP', error)
         })
       },
+      cargarAlumno(alumno) {
+        this.$store.dispatch('cargaAlumno', alumno)
+      }
     },
     computed: {
  
@@ -143,7 +152,7 @@
 </script>
 
 <style scoped lang="css">
-  .src-components-coordinador-listar-cursos {
+  .src-components-profesor-curso-detalle {
 
   }
   .jumbotron {

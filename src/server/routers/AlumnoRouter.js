@@ -30,6 +30,52 @@ function getAlumnoRouter() {
         }
     })
 
+    router.get('/solicitudescambiodatos', async(req, res) => {
+        try {
+            const solicitudes = await alumnoApi.solicitudesCambioDatos()
+            res.json(solicitudes)
+        }
+        catch (err) {
+            let error = new CustomError(400, 'Error al traer las solicitudes', err)
+            res.send(error)
+        }
+    })
+    
+    router.get('/solicitudescambiocurso', async(req, res) => {
+        try {
+            const solicitudes = await alumnoApi.solicitudesCambioCurso()
+            res.json(solicitudes)
+        }
+        catch (err) {
+            let error = new CustomError(400, 'Error al traer las solicitudes', err)
+            res.send(error)
+        }
+    })
+
+    router.put('/agregarsolicitudcurso/', async (req, res) => {
+        const solicitud = req.body
+        try {
+            const solicitudEnviada = await alumnoApi.procesarSolicitudCambioCurso(solicitud)
+            res.json(solicitudEnviada)
+        }
+        catch (err) {
+            res.send(err)
+        }
+
+    })
+
+    router.post('/agregarsolicitud', async (req, res) => {
+        const solicitud = req.body
+        try {
+            const solicitudEnviada = await alumnoApi.solicitudEnviar(solicitud)
+            res.status(201).json(solicitudEnviada)
+        }
+        catch (err) {
+            let error = new CustomError(400, 'Error al agregar el alumno', err)
+            res.send(error)
+        }
+    })
+
     router.get('/:dni', async (req, res) => {
         try {
             const dni = req.params.dni
@@ -104,6 +150,15 @@ function getAlumnoRouter() {
     router.post('/actualizarnotas/', async (req, res) => {
         try {
             await alumnoApi.actualizarNotas(req.body)
+        } catch (error) {
+            res.send(error)
+        }
+    })
+
+    router.put('/modificarnotas/:dni', async (req, res) => {
+        try {
+            const resultado = await alumnoApi.actualizarNotasPut(req.body)
+            res.json(resultado)
         } catch (error) {
             res.send(error)
         }

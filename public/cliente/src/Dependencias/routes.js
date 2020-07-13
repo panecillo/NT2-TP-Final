@@ -18,13 +18,12 @@ import AlumnoOpcionesSolicitud from "../components/Alumno/AlumnoOpcionesSolicitu
 //---------------------------------------------------------------------------------------------------------
 
 import Profesor from "../components/Profesor/Profesor.vue";
-import CursosProfesor from "../components/Profesor/CursosProfesor.vue";
-import CursoDetalles from "../components/Profesor/CursoDetalles.vue";
-import OpcionesProfesor from "../components/Profesor/OpcionesProfesor.vue";
-import HorariosProfesor from "../components/Profesor/HorariosProfesor.vue";
-import CalificarAlumno from "../components/Profesor/CalificarAlumno.vue";
-import FormConsultasParaCoordinador from "../components/Profesor/FormConsultasParaCoordinador.vue"
-import FormCambioDatosProfesor from "../components/Profesor/FormCambioDatosProfesor.vue"
+import ProfesorCursos from "../components/Profesor/ProfesorCursos.vue";
+import ProfesorCursosDetalle from "../components/Profesor/ProfesorCursosDetalle.vue";
+import ProfesorNotas from "../components/Profesor/ProfesorNotas.vue";
+import ProfesorHorarios from "../components/Profesor/ProfesorHorarios.vue";
+import ProfesorOpcionesDatos from "../components/Profesor/ProfesorOpcionesDatos.vue";
+import ProfesorOpcionesContacto from "../components/Profesor/ProfesorOpcionesContacto.vue";
 
 //---------------------------------------------------------------------------------------------------------
 //                                              Coordinador
@@ -40,9 +39,13 @@ import CoordinadorAlumnoDetalles from "../components/Coordinador/CoordinadorAlum
 import CoordinadorAlumnoAlta from "../components/Coordinador/CoordinadorAlumnoAlta.vue";
 import CoordinadorAlumnoModificacion from "../components/Coordinador/CoordinadorAlumnoModificacion.vue";
 import CoordinadorAlumnoSolicitudes from "../components/Coordinador/CoordinadorAlumnoSolicitudes.vue";
+import CoordinadorAlumnoSolicitudesDetalles from "../components/Coordinador/CoordinadorAlumnoSolicitudesDetalles.vue";
 import CoordinadorProfesorListar from "../components/Coordinador/CoordinadorProfesorListar.vue";
+import CoordinadorProfesorDetalles from "../components/Coordinador/CoordinadorProfesorDetalles.vue";
 import CoordinadorProfesorAlta from "../components/Coordinador/CoordinadorProfesorAlta.vue";
+import CoordinadorProfesorModificacion from "../components/Coordinador/CoordinadorProfesorModificacion.vue";
 import CoordinadorProfesorConsultas from "../components/Coordinador/CoordinadorProfesorConsultas.vue";
+import CoordinadorProfesorConsultasDetalles from "../components/Coordinador/CoordinadorProfesorConsultasDetalles.vue";
 import CoordinadorOpcionesDatos from "../components/Coordinador/CoordinadorOpcionesDatos.vue";
 
 Vue.use(VueRouter)
@@ -59,14 +62,15 @@ export default new VueRouter({
             {path: '/AlumnoOpcionesDatos', component: AlumnoOpcionesDatos},
             {path: '/AlumnoOpcionesSolicitud', component: AlumnoOpcionesSolicitud}
         ]},
-        {path: '/Profesor', component: Profesor},
-        {path: '/CursosProfesor/:dni/:legajo', component: CursosProfesor, props:true},
-        {path: '/CursoDetalles/:idCurso/:nombreCurso/:dniProfesor/:legajo', component: CursoDetalles, props:true},
-        {path: '/OpcionesProfesor/:dni/:legajo', component: OpcionesProfesor, props:true},
-        {path: '/HorariosProfesor/:dni/:legajo', component: HorariosProfesor, props:true},
-        {path: '/CalificarAlumno/:dniProfesor/:legajo/:dniAlumno/:nombreAlumno/:apellidoAlumno', component: CalificarAlumno, props:true},
-        {path: '/FormConsultasParaCoordinador/:dni/:legajo', component: FormConsultasParaCoordinador, props:true},
-        {path: '/FormCambioDatosProfesor/:dni/:legajo', component: FormCambioDatosProfesor, props:true},
+        {path: '/Profesor', component: Profesor,
+        children: [
+            {path: '/ProfesorCursos', component: ProfesorCursos},
+            {path: '/ProfesorCursosDetalle', component: ProfesorCursosDetalle},
+            {path: '/ProfesorNotas', component: ProfesorNotas},
+            {path: '/ProfesorHorarios', component: ProfesorHorarios},
+            {path: '/ProfesorOpcionesDatos', component: ProfesorOpcionesDatos},
+            {path: '/ProfesorOpcionesContacto', component: ProfesorOpcionesContacto}
+        ]},
         {path: '/Coordinador', component: Coordinador,
         children: [
             {path: '/CoordinadorCursoListar', component: CoordinadorCursoListar},
@@ -78,9 +82,13 @@ export default new VueRouter({
             {path: '/CoordinadorAlumnoModificacion', component: CoordinadorAlumnoModificacion},
             {path: '/CoordinadorAlumnoDetalles', component: CoordinadorAlumnoDetalles},
             {path: '/CoordinadorAlumnoSolicitudes', component: CoordinadorAlumnoSolicitudes},
+            {path: '/CoordinadorAlumnoSolicitudesDetalles', component: CoordinadorAlumnoSolicitudesDetalles},
             {path: '/CoordinadorProfesorListar', component: CoordinadorProfesorListar},
             {path: '/CoordinadorProfesorAlta', component: CoordinadorProfesorAlta},
+            {path: '/CoordinadorProfesorModificacion', component: CoordinadorProfesorModificacion},
+            {path: '/CoordinadorProfesorDetalles', component: CoordinadorProfesorDetalles},
             {path: '/CoordinadorProfesorConsultas', component: CoordinadorProfesorConsultas},
+            {path: '/CoordinadorProfesorConsultasDetalles', component: CoordinadorProfesorConsultasDetalles},
             {path: '/CoordinadorOpcionesDatos', component: CoordinadorOpcionesDatos}
         ]},
     ]

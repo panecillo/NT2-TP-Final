@@ -55,7 +55,6 @@
       getCursos() {
         this.axios.get(urlCursos + 'cursos')
         .then( res => {
-          console.log(res.data)
           this.cursos = res.data
         })
         .catch(error => {

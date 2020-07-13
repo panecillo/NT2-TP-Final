@@ -21,7 +21,7 @@
           />
           <field-messages name="dni" show="$dirty">
             <div slot="required" class="alert alert-info my-1">Campo Obligatorio</div>
-            <div slot="min" class="alert alert-danger my-1">El telefono debe tener como mínimo {{dniMin}} números</div>
+            <div slot="min" class="alert alert-danger my-1">El DNI debe tener como mínimo 6 números</div>
           </field-messages>
         </validate>
 
@@ -37,16 +37,10 @@
             placeholder="Ingrese el apellido"
             v-model="formData.apellido"
             required
-            :minlength="largoMin"
-            :maxlength="largoMax"
             :disabled="enviado"
           />
           <field-messages name="apellido" show="$dirty">
             <div slot="required" class="alert alert-info my-1">Campo Obligatorio</div>
-            <div
-              slot="minlength"
-              class="alert alert-danger my-1"
-            >El apellido debe tener por lo menos {{ largoMin }} caracteres</div>
           </field-messages>
         </validate>
 
@@ -62,16 +56,12 @@
             placeholder="Ingrese el nombre"
             v-model="formData.nombre"
             required
-            :minlength="largoMin"
-            :maxlength="largoMax"
             :disabled="enviado"
           />
           <field-messages name="nombre" show="$dirty">
-            <div slot="required" class="alert alert-info my-1">Campo Obligatorio</div>
-            <div
-              slot="minlength"
-              class="alert alert-danger my-1"
-            >El nombre debe tener por lo menos {{ largoMin }} caracteres</div>
+            <div slot="required" class="alert alert-info my-1">
+              Campo Obligatorio
+            </div>
           </field-messages>
         </validate>
 
@@ -87,16 +77,12 @@
             placeholder="Ingrese la dirección"
             v-model="formData.direccion"
             required
-            :minlength="largoMin"
-            :maxlength="largoMax"
             :disabled="enviado"
           />
           <field-messages name="direccion" show="$dirty">
-            <div slot="required" class="alert alert-info my-1">Campo Obligatorio</div>
-            <div
-              slot="minlength"
-              class="alert alert-danger my-1"
-            >La dirección debe tener por lo menos {{ largoMin }} caracteres</div>
+            <div slot="required" class="alert alert-info my-1">
+              Campo Obligatorio
+            </div>
           </field-messages>
         </validate>
 
@@ -109,16 +95,18 @@
             id="email"
             class="form-control"
             name="email"
-            placeholder="Ingrese el Nivel del Curso"
+            placeholder="Ingrese el Email"
             v-model="formData.email"
             required
-            :minlength="largoMin"
-            :maxlength="largoMax"
             :disabled="enviado"
           />
           <field-messages name="email" show="$dirty">
-            <div slot="required" class="alert alert-info my-1">Campo Obligatorio</div>
-            <div slot="email" class="alert alert-danger my-1">Email no válido</div>
+            <div slot="required" class="alert alert-info my-1">
+              Campo Obligatorio
+            </div>
+            <div slot="email" class="alert alert-danger my-1">
+              Email no válido
+            </div>
           </field-messages>
         </validate>
 
@@ -140,15 +128,19 @@
             :disabled="enviado"
           >
           <field-messages name="telefono" show="$dirty">
-            <div slot="required" class="alert alert-danger my-1">Campo Obligatorio</div>
-            <div slot="min" class="alert alert-danger my-1">El telefono debe tener como mínimo {{telefonoMin}} números</div>
+            <div slot="required" class="alert alert-danger my-1">
+              Campo Obligatorio
+            </div>
+            <div slot="min" class="alert alert-danger my-1">
+              El telefono debe tener como mínimo 6 números
+            </div>
           </field-messages>
         </validate>
 
         <br/>
 
         <div class="col-1">
-          <button class="btn btn-success my-4" :disabled="formState.$invalid" type="submit">{{ this.etiquetaBoton }}</button>
+          <button class="btn btn-success my-4" :disabled="formState.$invalid || formState.$submitted" type="submit">{{ this.etiquetaBoton }}</button>
         </div>
         <div :class="estiloMensajeEnviado" v-if="enviado">
           {{ mensajeEnvio }}
@@ -181,8 +173,6 @@
         enviando: false,
         enviado: false,
         etiquetaBoton: 'Enviar',
-        largoMax: 50,
-        largoMin: 2,
         errorEnvio: false,
         mensajeEnvio: "",
         estiloMensajeEnviado: "",
@@ -203,9 +193,6 @@
           telefono: ''
         }
       },
-      toggleEnviando() {
-        this.enviando = !this.enviando
-      },
       enviar() {
         this.toggleEnviando()
         this.enviado = true
@@ -216,7 +203,7 @@
             'content-type' : 'application/json'
           })
           .then(res => {
-            if(res.data.error){
+            if(res.data.estado){
               this.errorEnvio = true
               this.estiloMensajeEnviado = "alert alert-danger my-1"
               this.mensajeEnvio = "Error crear el Alumno"

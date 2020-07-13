@@ -20,7 +20,16 @@ function getProfesorRouter() {
 
     router.post('/cargarconsultacoordinador/', async (req, res) => {
         try {
-            await profesorApi.cargarConsultaParaCoordinador(req.body)
+            const respuesta = await profesorApi.cargarConsultaParaCoordinador(req.body)
+            res.json(respuesta)
+        } catch (error) {
+            res.send(error)
+        }
+    })
+
+    router.put('/modificarconsultacoordinador/', async (req, res) => {
+        try {
+            await profesorApi.modificarConsultaParaCoordinador(req.body)
         } catch (error) {
             res.send(error)
         }
@@ -28,7 +37,8 @@ function getProfesorRouter() {
 
     router.post('/cargarsolicitudactualizaciondatos/', async (req, res) => {
         try {
-            await profesorApi.cargarSolicitudActualizacionDatos(req.body)
+            const datos = await profesorApi.cargarSolicitudActualizacionDatos(req.body)
+            res.json(datos)
         } catch (error) {
             res.send(error)
         }
@@ -52,7 +62,16 @@ function getProfesorRouter() {
         } catch (err) {
             res.status(err.estado).json(err)
         }
+    })
 
+    router.get('/getcursospordni/:dni', async(req,res) => {
+        let resultadoBuscarCursos
+        try {
+            resultadoBuscarCursos = await profesorApi.buscarCursosDni(req.params.dni)
+            res.json(resultadoBuscarCursos)
+        } catch (err) {
+            res.status(err.estado).json(err)
+        }
     })
 
     router.get('/gethorariosporlegajo/:legajo', async(req,res) => {
@@ -97,7 +116,7 @@ function getProfesorRouter() {
 
     })
 
-    router.put('/', async (req, res) => {
+    router.put('/:dni', async (req, res) => {
         const profeParaReemplazar = req.body
 
         try {

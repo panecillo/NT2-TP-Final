@@ -47,7 +47,7 @@
               </a>
               <a>
                 <router-link to="/CoordinadorAlumnoSolicitudes" tag="a"> 
-                  <a class="nav-link" href="#">Solicitudes</a>
+                  <a class="nav-link" href="#" @click="cargarSolicitudes()">Solicitudes</a>
                 </router-link>
               </a>
             </div>
@@ -101,6 +101,9 @@
 
 <script lang="js">
 
+  import { urlAlumnos } from '../../Dependencias/urls'
+  import { urlCursos } from '../../Dependencias/urls'
+
   export default  {
     name: 'src-components-coordinador-navbar',
     props: ['coordinador-navbar'],
@@ -112,9 +115,22 @@
       }
     },
     methods: {
-      toggleConectado(){
-        this.$store.dispatch('toggleConectado')
-      }
+      cargarSolicitudes() {
+        this.axios.get(urlCursos + 'cursos')
+        .then( res2 => {
+          this.$store.dispatch('cargarCursos', res2.data)
+        })
+        .catch(error => {
+          console.log('ERROR GET HTTP', error)
+        })
+        this.axios.get(urlAlumnos + 'solicitudescambiocurso/')
+        .then( res => {
+          this.$store.dispatch('cargaSolicitudes', res.data)
+        })
+        .catch(error => {
+          console.log('ERROR GET HTTP', error)
+        })
+      },
     },
     computed: {
 

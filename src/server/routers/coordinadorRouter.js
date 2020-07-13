@@ -28,11 +28,40 @@ function getCoordinadorRouter() {
         }
     })
 
+    router.get('/getsolicitudescambiocurso', async (req, res) => {
+        try {
+            const solicitudes = await coordinadorApi.getSolicitudesCambioCurso()
+            res.json(solicitudes)
+        } catch (err) {
+            res.send(err)
+        }
+    })
+
     router.get('/getprofesorporlegajo/:legajo', async(req,res) => {
         let resultadoBuscarProfesor
         try {
             resultadoBuscarProfesor = await coordinadorApi.buscarProfesor(req.params.legajo)
             res.json(resultadoBuscarProfesor)
+        } catch (err) {
+            res.status(err.estado).json(err)
+        }
+    })
+
+    router.get('/getprofesorporcurso/:idcurso', async(req,res) => {
+        let resultadoBuscarProfesor
+        try {
+            resultadoBuscarProfesor = await coordinadorApi.buscarProfesorPorCurso(req.params.idcurso)
+            res.json(resultadoBuscarProfesor)
+        } catch (err) {
+            res.status(err.estado).json(err)
+        }
+    })
+
+    router.get('/getconsultasprofesores/', async(req,res) => {
+        let consultasProfesor
+        try {
+            consultasProfesor = await coordinadorApi.getConsultasProfesor()
+            res.json(consultasProfesor)
         } catch (err) {
             res.status(err.estado).json(err)
         }
@@ -64,10 +93,10 @@ function getCoordinadorRouter() {
         //res.send("agregar el curso " + req.body.curso + " al coordinador " + req.body.legajo)
         let resultadoAsignarCurso
         try {
-            resultadoAsignarCurso = await coordinadorApi.asignarCursoAlumnoComoCoordinador(req.body.curso, req.body.dni)
+            resultadoAsignarCurso = await coordinadorApi.asignarCursoAlumnoComoCoordinador(req.body)
             res.json(resultadoAsignarCurso)
         } catch (err) {
-            res.status(err.estado).json(err)
+            res.send(err)
         }
 
     })

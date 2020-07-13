@@ -41,6 +41,12 @@ class ProfesorApi {
         return cursos
     }
 
+    async buscarCursosDni(dni) {
+        let cursos
+        cursos = await this.profesorDao.buscarCursosDeProfesorDni(dni)
+        return cursos
+    }
+
     async buscarHorarios(legajo) {
         let horarios
         horarios = await this.profesorDao.buscarHorariosDeProfesor(legajo)
@@ -65,14 +71,33 @@ class ProfesorApi {
 
     async cargarConsultaParaCoordinador(datos) 
     {
-        let respuesta = await this.profesorDao.cargarConsultaParaCoordinador(datos)
+        try {
+            let respuesta = await this.profesorDao.cargarConsultaParaCoordinador(datos)
+            return respuesta
+        }catch (err) {
+            if(!(err instanceof CustomError)){
+                throw new CustomError(405, 'Error al cargar la consulta del profesor para el coordinador', err)
+            }
+        }
+    }
+
+    async modificarConsultaParaCoordinador(consulta) {
+        let respuesta = await this.profesorDao.modificarConsultaParaCoordinador(consulta)
         return respuesta
     }
 
     async cargarSolicitudActualizacionDatos(datos)
     {
-        let respuesta = await this.profesorDao.cargarSolicitudActualizacionDatos(datos)
-        return respuesta
+        try{
+            let respuesta = await this.profesorDao.cargarSolicitudActualizacionDatos(datos)
+            return respuesta
+        }
+        catch(err){
+            if(!(err instanceof CustomError)){
+                throw new CustomError(400, 'Error al cargar la solicitud', err)
+            }
+            throw err
+        }
     }
 
     async eliminarCursoDeProfesor(curso, legajo)
@@ -82,11 +107,11 @@ class ProfesorApi {
     }
 
     static asegurarProfesorValido(profesor) {
-        try {
+/*         try {
             Profesor.validar(profesor)
         } catch (error) {
             throw new CustomError(400, 'El profesor posee un formato json invalido o faltan datos', error)
-        }
+        } */
     }
 
 }

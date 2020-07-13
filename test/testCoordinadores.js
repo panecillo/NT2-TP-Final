@@ -110,20 +110,30 @@ async function testEliminarCoordinador(cli){
 async function testAsignarCursoAlumnoComoCoordinador(cli) {
     console.log("\nCorriendo test:  Asignar curso a Alumno como coordinador")
     
-    let dni = 112233
-    let curso = 911
-
-    let rta = await cli.asignarCursoAlumnoComoCoordinador(curso,dni)
-    //console.log(rta)
-
-    if (rta.error) {
-        console.log("Test falla con error: ", rta.msg)
-        return true
-    } else {
-        console.log("Test OK")
-        return false
+    let datos = {
+        dni: 22000001,
+        curso: 200,
+        solicitud: {
+            idsolicitud: 3,
+            dni: 22000001,    
+            idcurso: 200,
+            fechasolicitud: "2020-07-12T05:06:26-03:00",
+            estado: "Procesado"
+        }
     }
+    
+    let rta
+
+    try {
+        rta = await cli.asignarCursoAlumnoComoCoordinador(datos)
+    }
+    catch(error) {
+        console.log("Test falla con error: ", error)
+    }
+
+    return rta
 }
+
 
 
 async function testCrearCursoNuevo(cli){
@@ -169,14 +179,14 @@ async function testListarProfesorConHorariosComoCoordinador(cli) {
 async function main() {
 
     const tests = [
-        testAgregarCoordinador,
+/*         testAgregarCoordinador,
         testObtenerPorDniCoordinador,
         testbuscarTodos,
         testModificarDatosPorDniCoordinador,
-        testEliminarCoordinador,
-        testAsignarCursoAlumnoComoCoordinador,
+        testEliminarCoordinador, */
+        testAsignarCursoAlumnoComoCoordinador/* ,
         testCrearCursoNuevo,
-        testListarProfesorConHorariosComoCoordinador,
+        testListarProfesorConHorariosComoCoordinador, */
     ]
 
     const ipServidor = 'http://127.0.0.1'
@@ -196,11 +206,12 @@ async function main() {
 //-------------------------------------cambie aca------------------------------//
         for (const test of tests) {
             error = await test(cli)       
-            if (error) {
+            /* if (error) {
                 errors ++
             } else {
                 passed ++
-            }
+            } */
+            console.log(error)
             done ++
          }
 //-------------------------------------------------------------------//         

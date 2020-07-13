@@ -25,6 +25,18 @@ class AlumnoApi {
         return alumnoFormateado
     }
 
+    async solicitudEnviar(solicitud) {
+        let solicitudEnviada
+        try{
+           solicitudEnviada = await this.alumnosDao.enviarSolicitud(solicitud)
+        }
+        catch(err){
+            let error = new CustomError(400, 'Error al enviar la solicitud desde Api', err)
+            throw error
+        }
+        return solicitudEnviada
+    }
+
     async buscarAlumno(dni) {
         try{
             const alumno = await this.alumnosDao.buscarAlumnoPorDni(dni)
@@ -53,6 +65,16 @@ class AlumnoApi {
     async listarAlumnosYNotas(){
         const alumnos = await this.alumnosDao.listarAlumnosYNotas()
         return alumnos
+    }
+
+    async solicitudesCambioDatos(){
+        const solicitudes = await this.alumnosDao.solicitudesCambioDatos()
+        return solicitudes
+    }
+
+    async solicitudesCambioCurso(){
+        const solicitudes = await this.alumnosDao.solicitudesCambioCurso()
+        return solicitudes
     }
 
     async borrarAlumno(dni){
@@ -104,12 +126,35 @@ class AlumnoApi {
         }
     }
 
+    async procesarSolicitudCambioCurso(solicitud){
+        try{
+            await this.alumnoDao.procesarSolicitud(solicitud)
+            return solicitud
+        }
+        catch(err){
+            throw new CustomError(400, 'Error al procesar la solicitud', err)
+        }
+    }
+
     async actualizarNotas(datos) {
         try {
             await this.alumnosDao.actualizarNotas(datos)
         }
         catch(err){
             throw new CustomError(400, 'Error al actualizar notas', err)
+        }
+    }
+
+    async actualizarNotasPut(datos) {
+        try {
+            const resultado = await this.alumnosDao.actualizarNotasPut(datos)
+            return resultado
+        }
+        catch(err){
+            if(!(err instanceof CustomError)){
+                throw new CustomError(400, 'Error al actulaizar las notas', err)
+            }
+            throw err
         }
     }
 

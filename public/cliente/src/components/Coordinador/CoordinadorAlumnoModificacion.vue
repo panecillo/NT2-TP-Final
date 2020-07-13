@@ -35,11 +35,12 @@
             :disabled="enviado"
           />
           <field-messages name="apellido" show="$dirty">
-            <div slot="required" class="alert alert-info my-1">Campo Obligatorio</div>
-            <div
-              slot="minlength"
-              class="alert alert-danger my-1"
-            >El apellido debe tener por lo menos {{ largoMin }} caracteres</div>
+            <div slot="required" class="alert alert-info my-1">
+              Campo Obligatorio
+            </div>
+            <div slot="minlength" class="alert alert-danger my-1">
+              El apellido debe tener por lo menos {{ largoMin }} caracteres
+            </div>
           </field-messages>
         </validate>
 
@@ -60,11 +61,12 @@
             :disabled="enviado"
           />
           <field-messages name="nombre" show="$dirty">
-            <div slot="required" class="alert alert-info my-1">Campo Obligatorio</div>
-            <div
-              slot="minlength"
-              class="alert alert-danger my-1"
-            >El nombre debe tener por lo menos {{ largoMin }} caracteres</div>
+            <div slot="required" class="alert alert-info my-1">
+              Campo Obligatorio
+            </div>
+            <div slot="minlength" class="alert alert-danger my-1">
+              El nombre debe tener por lo menos {{ largoMin }} caracteres
+            </div>
           </field-messages>
         </validate>
 
@@ -85,11 +87,12 @@
             :disabled="enviado"
           />
           <field-messages name="direccion" show="$dirty">
-            <div slot="required" class="alert alert-info my-1">Campo Obligatorio</div>
-            <div
-              slot="minlength"
-              class="alert alert-danger my-1"
-            >La dirección debe tener por lo menos {{ largoMin }} caracteres</div>
+            <div slot="required" class="alert alert-info my-1">
+              Campo Obligatorio
+            </div>
+            <div slot="minlength" class="alert alert-danger my-1">
+              La dirección debe tener por lo menos {{ largoMin }} caracteres
+            </div>
           </field-messages>
         </validate>
 
@@ -110,8 +113,12 @@
             :disabled="enviado"
           />
           <field-messages name="email" show="$dirty">
-            <div slot="required" class="alert alert-info my-1">Campo Obligatorio</div>
-            <div slot="email" class="alert alert-danger my-1">Email no válido</div>
+            <div slot="required" class="alert alert-info my-1">
+              Campo Obligatorio
+            </div>
+            <div slot="email" class="alert alert-danger my-1">
+              Email no válido
+            </div>
           </field-messages>
         </validate>
 
@@ -132,15 +139,19 @@
             :disabled="enviado"
           >
           <field-messages name="telefono" show="$dirty">
-            <div slot="required" class="alert alert-danger my-1">Campo Obligatorio</div>
-            <div slot="min" class="alert alert-danger my-1">El telefono debe tener como mínimo {{telefonoMin}} números</div>
+            <div slot="required" class="alert alert-danger my-1">
+              Campo Obligatorio
+            </div>
+            <div slot="min" class="alert alert-danger my-1">
+              El telefono debe tener como mínimo 6 números
+            </div>
           </field-messages>
         </validate>
 
         <br/>
 
         <div class="col-1">
-          <button class="btn btn-success my-4" :disabled="formState.$invalid" type="submit">{{ this.etiquetaBoton }}</button>
+          <button class="btn btn-success my-4" :disabled="formState.$invalid || formState.$submitted" type="submit">{{ this.etiquetaBoton }}</button>
         </div>
         <div :class="estiloMensajeEnviado" v-if="enviado">
           {{ mensajeEnvio }}
@@ -203,9 +214,6 @@
         this.formData.direccion = this.$store.state.alumno.direccion
         this.formData.telefono = this.$store.state.alumno.telefono      
       },
-      toggleEnviando() {
-        this.enviando = !this.enviando
-      },
       enviar() {
         this.toggleEnviando()
         this.enviado = true
@@ -219,7 +227,7 @@
             if(res.data.error){
               this.errorEnvio = true
               this.estiloMensajeEnviado = "alert alert-danger my-1"
-              this.mensajeEnvio = "Error modificar el Alumno"
+              this.mensajeEnvio = "Error al modificar el Alumno"
             }
             else {
               this.estiloMensajeEnviado = "alert alert-success my-1"
@@ -227,7 +235,7 @@
             }
           })
           .catch(error => {
-            console.log('ERROR GET HTTP', error)
+            console.log('ERROR PUT HTTP', error)
           })
           this.etiquetaBoton = "Enviar"
           this.toggleEnviando()

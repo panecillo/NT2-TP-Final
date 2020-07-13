@@ -8,7 +8,7 @@
     "testCoordinadores": "node -r dotenv/config ./test/testCoordinadores.js dotenv_config_path=./.env",
     "testAlumnos": "node -r dotenv/config ./test/testAlumnos.js dotenv_config_path=./.env",
     "testProfesores": "node -r dotenv/config ./test/testProfesores.js dotenv_config_path=./.env",
-    "testServer": "node -r dotenv/config ./test/testServer.js dotenv_config_path=./.env"
+    "testServer" : "node -r dotenv/config ./test/testServer.js dotenv_config_path=./.env"
   },
   "keywords": [],
   "author": "",

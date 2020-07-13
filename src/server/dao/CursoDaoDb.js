@@ -120,10 +120,11 @@ class CursoDaoDb extends CursoDao {
         try {
             const db = await this.client.getDb()
             cursos = await db.select().from('curso')
-            .join('nivel', 'nivel.idcurso', 'curso.idcurso')
-            .join('profesorescursos', 'profesorescursos.idcurso', 'curso.idcurso')
-            .join('empleadoslegajos', 'profesorescursos.legajo', 'empleadoslegajos.legajo')
-            .join('datoscontacto', 'empleadoslegajos.dni', 'datoscontacto.dni')
+            .leftJoin('nivel', 'nivel.idcurso', 'curso.idcurso')
+            .leftJoin('profesorescursos', 'profesorescursos.idcurso', 'curso.idcurso')
+            .leftJoin('empleadoslegajos', 'profesorescursos.legajo', 'empleadoslegajos.legajo')
+            .leftJoin('datoscontacto', 'empleadoslegajos.dni', 'datoscontacto.dni')
+
             return cursos
         } catch (err) {
             throw new CustomError(400, 'Error al buscar los cursos', err)

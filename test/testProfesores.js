@@ -34,7 +34,7 @@ async function testAgregarProfesor(cli){
     
     let rta
     rta = await cli.crearProfesor(dato)
-
+    console.log(rta)
     //console.log(rta)
         
     if (rta.estado) {
@@ -44,6 +44,33 @@ async function testAgregarProfesor(cli){
         console.log("Test OK")
         return false
     }
+}
+
+async function cargarConsulta(cli){
+
+    console.log("\nCorriendo test:  Cargar consulta")
+
+    let dato =   {
+        dni: 55000001,
+        legajo: 1000,
+        apellido: "pepe",
+        nombre: "patea traseros",
+        consulta: "me estas rompiendo las bolas",	
+        leida: 0,
+        fecha: "2020-07-13T04:49:00.000Z" 
+    }
+    
+    let rta
+    rta = await cli.cargarConsulta(dato)
+    return rta
+        
+/*     if (rta.estado) {
+        console.log("Test fallla con error: ", rta.descripcion)
+        return true
+    } else {
+        console.log("Test OK")
+        return false
+    } */
 
 
 }
@@ -174,10 +201,26 @@ async function testListarCursosProfesor(cli) {
 
 }
 
+async function testListarCursosProfesorDni(cli) {
+    console.log("\nCorriendo test: Buscar cursos de un profesor")
+
+    let rta = await cli.buscarCursosPorDni(55000001)
+    //console.log(rta)
+
+/*     if (rta.error) {
+        console.log("Test falla con error: ", rta.msg)
+        return true
+    } else {
+        console.log("Test OK")
+        return false
+    } */
+    return rta
+}
+
 async function main() {
 
     const tests = [
-        testAgregarProfesor,
+/*         testAgregarProfesor,
         testObtenerPorDniProfesor,
         testObtenerPorLegajoProfesor,
         testbuscarTodos,
@@ -185,7 +228,9 @@ async function main() {
         testAsignarCursoAProfesor,
         testEliminarCursoDeProfesor,
         testEliminarProfesor,
-        testListarCursosProfesor
+        testListarCursosProfesor,
+        testListarCursosProfesorDni, */
+        cargarConsulta
     ]
 
     const ipServidor = 'http://127.0.0.1'
@@ -205,11 +250,12 @@ async function main() {
 //-------------------------------------cambie aca------------------------------//
         for (const test of tests) {
             error = await test(cli)       
-            if (error) {
+/*             if (error) {
                 errors ++
             } else {
                 passed ++
-            }
+            } */
+            console.log(error)
             done ++
          }
 //-------------------------------------------------------------------//         

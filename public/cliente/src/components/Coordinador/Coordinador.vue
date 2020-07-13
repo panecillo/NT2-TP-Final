@@ -4,6 +4,8 @@
     <BarraSuperior/>
     <CoordinadorNavbar/> 
     <router-view></router-view>
+    <Footer/>
+
   </section>
 
 </template>
@@ -12,12 +14,14 @@
 
   import CoordinadorNavbar from "./CoordinadorNavbar.vue";
   import BarraSuperior from "../Auxiliares/BarraSuperior.vue"
+  import Footer from "../Auxiliares/Footer.vue"
 
   export default  {
     name: 'src-components-coordinador',
     components: {
       CoordinadorNavbar,
-      BarraSuperior
+      BarraSuperior,
+      Footer
     },
     props: [],
     beforeCreate() {

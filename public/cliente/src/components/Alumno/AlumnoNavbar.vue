@@ -15,12 +15,12 @@
         <ul class="navbar-nav">
           <li class="nav-item">
             <router-link to="/AlumnoCurso" tag="li"> 
-              <a class="nav-link" href="#">Mis Cursos</a>
+              <a class="nav-link" href="#" v-on:click="getCurso()">Mi Curso</a>
             </router-link>
           </li>
           <li class="nav-item">
             <router-link to="/AlumnoProfesor" tag="li"> 
-              <a class="nav-link" href="#">Mis Horarios</a>
+              <a class="nav-link" href="#">Mi Profesor</a>
             </router-link>
           </li>
           <li class="nav-item dropdown">
@@ -35,7 +35,7 @@
               </a>
               <a>
                 <router-link to="/AlumnoOpcionesSolicitud" tag="a"> 
-                  <a class="nav-link" href="#">Cambio de Curso</a>
+                  <a class="nav-link" href="#" v-on:click="getCurso()">Cambio de Curso</a>
                 </router-link>
               </a>
             </div>
@@ -55,6 +55,8 @@
 
 <script lang="js">
 
+  import { urlCursos } from '../../Dependencias/urls'
+
   export default  {
     name: 'src-components-alumno-navbar',
     props: ['alumno-navbar'],
@@ -66,10 +68,16 @@
       }
     },
     methods: {
-      toggleConectado(){
-        console.log("hola")
-        this.$store.dispatch('toggleConectado')
-      }
+      
+      getCurso() {
+        this.axios.get(urlCursos + 'cursos/' + this.$store.state.usuario.idcurso)
+        .then( res => {
+          this.$store.dispatch('cargarCurso',res.data)
+        })
+        .catch(error => {
+          console.log('ERROR GET HTTP', error)
+        })
+      },
 
     },
     computed: {

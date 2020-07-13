@@ -19,11 +19,14 @@
             :disabled="enviado"
           />
           <field-messages name="id" show="$dirty">
-            <div slot="required" class="alert alert-info my-1">Campo Obligatorio</div>
+            <div slot="required" class="alert alert-info my-1">
+              Campo Obligatorio
+            </div>
           </field-messages>
         </validate>
 
         <br/>
+
         <validate tag="div" class="titulo">
           <label for="nombre" class="titulo">Nombre</label>
           <input
@@ -39,14 +42,17 @@
             :disabled="enviado"
           />
           <field-messages name="nombre" show="$dirty">
-            <div slot="required" class="alert alert-info my-1">Campo Obligatorio</div>
-            <div
-              slot="minlength"
-              class="alert alert-danger my-1"
-            >El nombre debe tener por lo menos {{ largoMin }} caracteres</div>
+            <div slot="required" class="alert alert-info my-1">
+              Campo Obligatorio
+            </div>
+            <div slot="minlength" class="alert alert-danger my-1">
+              El nombre debe tener por lo menos {{ largoMin }} caracteres
+            </div>
           </field-messages>
         </validate>
+
         <br/>
+
         <validate tag="div" class="titulo">
           <label for="dificultad" class="titulo">Nivel</label>
           <input
@@ -62,27 +68,30 @@
             :disabled="enviado"
           />
           <field-messages name="dificultad" show="$dirty">
-            <div slot="required" class="alert alert-info my-1">Campo Obligatorio</div>
-            <div
-              slot="minlength"
-              class="alert alert-danger my-1"
-            >El nivel debe tener por lo menos {{ largoMin }} caracteres</div>
+            <div slot="required" class="alert alert-info my-1">
+              Campo Obligatorio
+            </div>
+            <div slot="minlength" class="alert alert-danger my-1">
+              El nivel debe tener por lo menos {{ largoMin }} caracteres
+            </div>
           </field-messages>
         </validate>
+
         <br/>
+
         <validate>
           <label for="primeraClase" class="titulo">Primera Clase</label>
-          <div class="container">
+          <div class="">
             <div class="row">
               <div class="col">
-                <date-picker v-model="date" :config="options" name="fechaClase" :disabled="enviado" placeholder="Ingrese Fecha y Hora de la Primera Clase"></date-picker>
+                <date-picker v-model="formData.fechaClase" :config="options" name="fechaClase" id="fechaClase" :disabled="enviado" placeholder="Ingrese Fecha y Hora de la Primera Clase"></date-picker>
               </div>
             </div>
           </div>
         </validate>
 
         <div class="col-1">
-          <button class="btn btn-success my-4" :disabled="formState.$invalid" type="submit">{{ this.etiquetaBoton }}</button>
+          <button class="btn btn-success my-4" :disabled="formState.$invalid || formState.$submitted" type="submit">{{ this.etiquetaBoton }}</button>
         </div>
         <div :class="estiloMensajeEnviado" v-if="enviado">
           {{ mensajeEnvio }}
@@ -123,7 +132,7 @@
         errorEnvio: false,
         date: '',
         options: {
-          format: 'DD/MM/YYYY hh:mm:ss',
+          format: 'YYYY/MM/DD HH:MM:SS',
           useCurrent: false,
         },
         mensajeEnvio: "",
@@ -136,11 +145,8 @@
           idcurso: '',
           nombrecurso: '',
           dificultad:  '',
-          fechaClase: ''
+          fechaClase: null
         }
-      },
-      toggleEnviando() {
-        this.enviando = !this.enviando
       },
       enviar() {
         this.toggleEnviando()
@@ -148,7 +154,13 @@
         this.etiquetaBoton = "Enviando..."
 
         setTimeout(() => {
-          this.axios.post(urlCoordinadores + 'cursonuevo/', this.formData)
+          let paraEnviar = {
+            idcurso: this.formData.idcurso,
+            nombrecurso: this.formData.nombrecurso,
+            dificultad: this.formData.dificultad,
+            fechaclase: String(this.formData.fechaClase).replace("/", "-").replace("/", "-")
+          }
+          this.axios.post(urlCoordinadores + 'cursonuevo/', paraEnviar)
           .then(res => {
             if(res.data.error){
               this.errorEnvio = true
@@ -191,6 +203,7 @@
   }
   .container {
     padding: 0px;
+    width: 100%;
   }
   .col-1 {
     display: inline-block;

@@ -2,45 +2,17 @@ import Vue from "vue";
 
 var miMixin = {
   methods: {
-    getUrl() {
-      return this.$store.state.url
+    toggleConectado(){
+      this.$store.dispatch('toggleConectado')
     },
-
-    postearAlumnoAAxios(post)
-    {
-      this.$store.dispatch('actionPostearAlumnoAxios', post)
+    toggleEnviando() {
+      this.enviando = !this.enviando
     },
-
-    recuperarEmpleadoLocalStorage() 
-    {
-      this.$store.dispatch('recuperarEmpleadoLocalStorage')
-    },
-
-    getDniEmpleado() 
-    {
-      return this.$store.state.usuario.dni
-    },
-
-    getLegajoEmpleado()
-    {
-      return this.$store.state.usuario.legajo
-    }
-    
-
   },
   computed: {
 
-    getArrayProfesores() {
-      return this.$store.state.ArrayProfesores
-    },
-
-    cargarArrayProfesores()
-    {
-      this.$store.dispatch('actionCargarArrayProfesores')
-    }
   },
   created() {
-    
   }
 
 }

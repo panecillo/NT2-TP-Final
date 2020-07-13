@@ -14,19 +14,25 @@
 
     <Header texto="Curso"/>
 
-    <div class="jumbotron">
+    <div class="jumbotron" v-if="curso != ''">
       <p>Id: {{ curso.idcurso }}</p>
       <p>Nombre: {{ curso.nombrecurso }}</p>
       <p>Nivel: {{ curso.dificultad }}</p>
       <p>Profesor: {{ curso.apellido }} {{ curso.nombre }}</p>
     </div>
+    <div v-else class="alert alert-danger">
+      El alumno no está inscripto en ningún curso
+    </div>
 
     <Header texto="Notas"/>
 
-    <div class="jumbotron">
+    <div class="jumbotron" v-if="!((nota1 == null && nota2 == null && notaFinal == null) || (nota1 == '' && nota2 == '' && notaFinal == ''))">
       <p>Nota 1: {{ nota1 }}</p>
       <p>Nota 2: {{ nota2 }}</p>
       <p>Nota Final: {{ notaFinal }}</p>
+    </div>
+    <div v-else class="alert alert-danger">
+      El alumno no tienen ninguna califiacción
     </div>
 
   </section>
@@ -65,7 +71,6 @@
           res.data.forEach(curso => {
             if(curso.idcurso == this.alumno.idcurso) {
               this.curso = curso
-              console.log(curso)
             }
           })
         })
@@ -74,15 +79,17 @@
         })
       },
       getNotas() {
+        let i = 0
         this.axios.get(urlCursos + this.alumno.idcurso)
         .then( res => {
-          res.data.forEach(alumno => {
-            if(alumno.dni == this.alumno.dni) {
-              this.nota1 = alumno.nota1
-              this.nota2 = alumno.nota2
-              this.notaFinal = alumno.notaFinal
+          while(i < res.data.length) {
+            if(res.data[i].dni == this.alumno.dni) {
+              this.nota1 = res.data[i].nota1
+              this.nota2 = res.data[i].nota2
+              this.notaFinal = res.data[i].notaFinal
             }
-          })
+            i++
+          }
         })
         .catch(error => {
           console.log('ERROR GET HTTP', error)

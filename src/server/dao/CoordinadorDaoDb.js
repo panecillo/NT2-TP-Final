@@ -222,52 +222,57 @@ class CoordinadorDaoDb extends CoordinadorDao {
         return resultado2
     }   
 
-    async asignarCursoAlumnoComoCoordinador(idcurso,dni)
+    async asignarCursoAlumnoComoCoordinador(pedido)
     {
-        // Verificar que el Coordinador exista
+        // Verificar que el Alumno exista
         let buscarAlumno
-        let resultado
+        let resultado = 959
+
+        
         
         try {
             const db = await this.client.getDb()
             buscarAlumno =  await db.select().from('estudiante')
-            .where('estudiante.dni', '=' , dni)
-                    
-            if ( buscarAlumno.length) {
+            .where('estudiante.dni', '=' , pedido.dni)
+            if ( buscarAlumno.length != 0)  {
+
+                const curso = {
+                    idcurso:Number(pedido.curso)
+                } 
                 
                 // El Alumno existe, debo cargar el curso
                 // Actualizo la tabla Alumno/Cursos
-                try {
-                    resultado = await db.update({'dni':dni, 'idcurso':idcurso})
-                    .where('dni','=',dni)
-                    .from('estudiante')
 
-                } catch (error) {
-                    resultado = {
-                        "error": 400,
-                        "msg": error
-                    }
-                    return resultado
+                
+
+                try {    
+ //                   await db.update({'dni':pedido.dni, 'idcurso':pedido.curso})
+
+                    
+                    await db.update(curso)
+                    .from('estudiante')
+                    .where('dni','=',pedido.dni)
+                    await db.update({'idcurso':pedido.solicitud.idcurso, 'estado': pedido.solicitud.estado})
+                    .from('solicitudesalumnos')
+                    .where('idsolicitud', '=', pedido.solicitud.idsolicitud)
+                    
+
+                } 
+                catch (err) {
+                    throw new CustomError(406, 'Error al procesar el cambio en las tablas', err)
                 }
 
             } else {
                 // El Alumno no existe, debo devolver un error
-                resultado = {
-                    "error": 400,
-                    "msg": "El Alumno no existe"
-                }
-                return resultado
-            }
+                throw new CustomError(406, 'Error al procesar el cambio en las tablas')
 
-        } catch (error) {
-            resultado = {
-                "error": 400,
-                "msg": error
-            }
+            }    
+
             return resultado
         }
-    
-        return resultado
+        catch(err){
+            throw new CustomError(401, 'Error al procesar pedido', err)
+        }
 
     }
 
@@ -332,9 +337,48 @@ class CoordinadorDaoDb extends CoordinadorDao {
             })
         }
         catch(error) {       
-            throw new CustomError(400, 'Error modificar el Curso', err)     
+            throw new CustomError(400, 'Error modificar el Curso', error)     
         }       
         return resultado
+    }
+
+    async getConsultasProfesor() {
+        let consultas
+        try {
+            const db = await this.client.getDb()
+            consultas = await db.select().from('consultasprofesores')
+        }
+        catch(error) {       
+            throw new CustomError(400, 'Error al traer las consultas DAO', error)     
+        }       
+        return consultas
+    }
+
+    async buscarProfesorCurso(idcurso) {
+        let profesor
+        try {
+            const db = await this.client.getDb()
+            profesor = await db.select().from('profesorescursos')
+            .innerJoin('empleadoslegajos', 'profesorescursos.legajo', 'empleadoslegajos.legajo')
+            .innerJoin('datoscontacto', 'empleadoslegajos.dni', 'datoscontacto.dni')
+            .where('profesorescursos.idcurso', '=', idcurso)
+        }
+        catch(error) {       
+            throw new CustomError(400, 'Error al traer al profesor', error)     
+        }       
+        return profesor
+    }
+
+    async getSolicitudesCambioCurso() {
+        let solicitudes
+        try {
+            const db = await this.client.getDb()
+            solicitudes = await db.select().from('solicitudesalumnos')
+        }
+        catch(error) {       
+            throw new CustomError(400, 'Error al traer las solicitudes', error)     
+        }       
+        return solicitudes
     }
 
 }

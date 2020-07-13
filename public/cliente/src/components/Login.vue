@@ -20,7 +20,7 @@
             required
           />
           <field-messages name="user" show="$dirty">
-            <div slot="required" class="alert alert-danger my-1">Campo User requerido</div>
+            <div slot="required" class="alert alert-danger my-1">Campo Usuario requerido</div>
           </field-messages>
         </validate>
         <!-- ------------------------------------------------ -->
@@ -91,8 +91,8 @@
               if(this.datos[0] != undefined){
                 this.$store.dispatch('login',this.datos[0])
                 this.$store.dispatch('guardarAlumnoLocalStorage')
-                this.$store.dispatch('toggleConectado')
-                this.$router.push({
+                this.toggleConectado()
+                this.$router.replace({
                     path: '/Alumno',
                 })
               }
@@ -103,8 +103,8 @@
                   if(this.datos[0] != undefined){
                     this.$store.dispatch('login',this.datos[0])
                     this.$store.dispatch('guardarEmpleadoLocalStorage')
-                    this.$store.dispatch('toggleConectado')
-                    this.$router.push({
+                    this.toggleConectado()
+                    this.$router.replace({
                         path: '/Profesor',
                     })
                   }
@@ -115,8 +115,8 @@
                       if(this.datos[0] != undefined){
                         this.$store.dispatch('login',this.datos[0])
                         this.$store.dispatch('guardarEmpleadoLocalStorage')
-                        this.$store.dispatch('toggleConectado')
-                        this.$router.push({
+                        this.toggleConectado()
+                        this.$router.replace({
                           path: '/Coordinador',
                         })
                       }
@@ -140,6 +140,16 @@
           localStorage.removeItem('telefono')
           localStorage.removeItem('tipoempleado')
           localStorage.removeItem('legajo')
+          localStorage.removeItem('idcurso')
+          localStorage.removeItem('profesordni')
+          localStorage.removeItem('profesorlegajo')
+          localStorage.removeItem('profesorapellido')
+          localStorage.removeItem('profesornombre')
+          localStorage.removeItem('profesordireccion')
+          localStorage.removeItem('profesoremail')
+          localStorage.removeItem('nota1')
+          localStorage.removeItem('nota2')
+          localStorage.removeItem('notaFinal')
         }
     },
     computed: {

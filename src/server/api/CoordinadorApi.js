@@ -31,9 +31,28 @@ class CoordinadorApi {
         return coordinadores
     }
 
+    async getSolicitudesCambioCurso() {
+        let solicitudes
+        try {
+            solicitudes = await this.coordinadorDao.getSolicitudesCambioCurso()
+            return solicitudes
+        } catch (err) {
+            if(!(err instanceof CustomError)){
+                throw new CustomError(400, 'Error al traer las solicitudes', err)
+            }
+            throw err
+        }
+    }
+
     async buscarProfesor(legajo) {
         let profesor
         profesor = await this.coordinadorDao.buscarHorariosDeProfesor(legajo)
+        return profesor
+    }
+
+    async buscarProfesorPorCurso(idcurso) {
+        let profesor
+        profesor = await this.coordinadorDao.buscarProfesorCurso(idcurso)
         return profesor
     }
 
@@ -47,9 +66,17 @@ class CoordinadorApi {
         await this.coordinadorDao.modificarCoordinador(datosnuevos)
     }
 
-    async asignarCursoAlumnoComoCoordinador(curso, dni)
-    {   
-        let respuesta = await this.coordinadorDao.asignarCursoAlumnoComoCoordinador(curso, dni)
+    async asignarCursoAlumnoComoCoordinador(pedido) {   
+        let respuesta
+        try{
+            respuesta = await this.coordinadorDao.asignarCursoAlumnoComoCoordinador(pedido)
+        }
+        catch(err){
+            if(!(err instanceof CustomError)){
+                throw new CustomError(300, 'Error al procesar pedido', err)
+            }
+            throw err
+        }
         return respuesta
     }
 
@@ -84,6 +111,20 @@ class CoordinadorApi {
             }
             throw err
         }
+    }
+
+    async getConsultasProfesor() {
+        let consultas
+        try {
+            consultas = await this.coordinadorDao.getConsultasProfesor()
+            return consultas
+        } catch (error) {
+            if(!(error instanceof CustomError)){
+                throw new CustomError(400, 'Error al traer las consultas API', error)
+            }
+            throw error
+        }
+
     }
 
 }

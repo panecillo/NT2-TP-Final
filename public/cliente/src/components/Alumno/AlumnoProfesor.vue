@@ -1,7 +1,13 @@
 <template>
 
-  <section class="src-components-alumno-profesor">
+  <section class="src-components-alumno-profesor" v-if="profesor">
     <Header texto="Mi Profesor"/>
+
+    <div class="jumbotron">
+      <p>Nombre: {{ profesor[0].apellido }} {{ profesor[0].nombre }}</p>
+      <p>Telefono: {{ profesor[0].telefono }}</p>
+      <p>Email: {{ profesor[0].email }}</p>
+    </div>
 
   </section>
 
@@ -10,6 +16,7 @@
 <script lang="js">
 
   import Header from '../Auxiliares/Header.vue'
+  import { urlCoordinadores } from '../../Dependencias/urls'
 
   export default  {
     name: 'src-components-alumno-profesor',
@@ -18,20 +25,28 @@
       Header
     },
     mounted () {
+      this.getProfesor()
     },
     data () {
       return {
-
+        profesor: ''
       }
     },
     methods: {
-
+      getProfesor() {
+        this.axios.get(urlCoordinadores + 'getprofesorporcurso/' + this.$store.state.usuario.idcurso)
+        .then( res => {
+          this.profesor = res.data
+        })
+        .catch(error => {
+          console.log('ERROR GET HTTP', error)
+        })
+      }
     },
     computed: {
 
     }
 }
-
 
 </script>
 
@@ -39,5 +54,18 @@
   .src-components-alumno-profesor {
 
   }
+  .jumbotron {
+    padding-top: 20px;
+    padding-bottom: 15px;
+    margin-bottom: 10px;
 
+  }
+  td {
+    font-style: italic;
+    font-weight: 600;
+  }
+  p {
+    font-style: italic;
+    font-weight: 600;
+  }
 </style>

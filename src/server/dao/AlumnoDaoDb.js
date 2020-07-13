@@ -116,6 +116,21 @@ class AlumnoDaoDb extends AlumnoDao {
         }       
     }
 
+    async procesarSolicitud(solicitud){
+        try{
+            const db = await this.client.getDb()
+            await db.update(solicitud).from('solicitudesalumnos').where('solicitudesalumnos.fechasolicitud', '=', solicitud.fechasolicitud)
+        }
+        catch(err){
+            if(err.sqlMessage){
+                throw new CustomError(400, 'No hay ningún curso con el Id informado', err.sqlMessage)    
+            }
+            else{
+                throw new CustomError(400, 'No hay ningún alumno con el dni informado', '')
+            }
+        }
+    }
+
     async modificarAlumno(alumno){
         try{
             const db = await this.client.getDb()
@@ -135,6 +150,16 @@ class AlumnoDaoDb extends AlumnoDao {
             }
     }
 
+    async actualizarNotasPut(datos) {
+        try {
+                const db = await this.client.getDb()
+                const resultado = await db.update(datos).from('estudiantenotas').where('estudiantenotas.dni', '=', datos.dni)
+                return resultado
+            } catch (error) {
+                throw new CustomError(400, 'Error al actualizar las notas del alumno: ', error)
+            }
+    }
+
     async buscarDatosCurso(dni){
         try{
             const db = await this.client.getDb()
@@ -147,6 +172,39 @@ class AlumnoDaoDb extends AlumnoDao {
         }
         catch(err){
             throw new CustomError(400, 'Error al buscar los datos del curso', err)
+        }
+    }
+
+    async solicitudesCambioDatos(){
+        try{
+            const db = await this.client.getDb()
+            const solicitudes = await db.select().from('actualizardatosalumno')
+            return solicitudes
+        }
+        catch(err){
+            throw new CustomError(400, 'Error al buscar los datos del curso', err)
+        }
+    }
+
+    async solicitudesCambioCurso(){
+        try{
+            const db = await this.client.getDb()
+            const solicitudes = await db.select().from('solicitudesalumnos')
+            return solicitudes
+        }
+        catch(err){
+            throw new CustomError(400, 'Error al buscar los datos del curso', err)
+        }
+    }
+
+    async enviarSolicitud(solicitud) {
+        try {
+            const db = await this.client.getDb()
+            const resultado = await db.insert(solicitud).into('solicitudesalumnos')
+            return resultado
+        }
+        catch(err){
+            throw new CustomError(400, 'Error al enviar la solicitud', err)
         }
     }
 

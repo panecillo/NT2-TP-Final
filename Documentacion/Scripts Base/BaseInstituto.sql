@@ -58,7 +58,77 @@ INSERT INTO `actualizardatosprofesor` (`dni`, `legajo`, `nombre`, `apellido`, `d
 (55000001, 1000, 'Roberto', 'Yanez', 'calle 99 56799999', 123456, 'r@yanez', '2020-07-09 01:00:14'),
 (55000001, 1000, 'Roberto 2', 'Yanez 2', 'otra calle 300', 22222, 'otro@mail', '2020-07-09 01:00:41');
 
+
 -- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `actualizardatosalumno`
+--
+
+DROP TABLE IF EXISTS `actualizardatosalumno`;
+CREATE TABLE IF NOT EXISTS `actualizardatosalumno` (
+  `dni` int(11) NOT NULL,
+  `nombre` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
+  `apellido` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
+  `direccion` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
+  `telefono` int(11) DEFAULT NULL,
+  `email` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
+  `fechasolicitud` datetime DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `actualizardatosalumno`
+--
+
+INSERT INTO `actualizardatosalumno` (`dni`, `nombre`, `apellido`, `direccion`, `telefono`, `email`, `fechasolicitud`) VALUES
+(31000125, 'Julian', 'Garcia', 'Caracas 1234', 1151444434, 'jlian@mail.com', '2020-07-09 01:49:00'),
+(31000125, 'Julian', 'Garcia', 'Caracas 1234', 1151444434, 'jlian@mail.com', '2020-07-09 00:41:45'),
+(31000125, 'Julian', 'Garcia', 'Caracas 1234', 1151444434, 'jlian@mail.com', '2020-07-09 00:43:23'),
+(31000125, 'Julian', 'Garcia', 'calle 99 567999999', 1151444434, 'jlian@mail.com', '2020-07-09 00:49:00'),
+(31000125, 'Julian', 'Garcia', 'calle 99 567', 1151444434, 'jlian@mail.com', '2020-07-09 00:50:17'),
+(31000125, 'Julian', 'Garcia', 'calle 99 567', 1151444434, 'jlian@mail.com', '2020-07-09 00:50:38'),
+(31000125, 'Julian', 'Garcia', 'calle 99 567', 1151444434, 'jlian@mail.com', '2020-07-09 00:56:39'),
+(22000001, 'Nombre1', 'Apellido1', 'calle 99 567', 11111111, 'a@lumno1.com', '2020-07-09 00:58:04'),
+(22000001, 'Nombre1', 'Apellido1', 'calle 99 567', 1191191, 'a@lumno1.com', '2020-07-09 00:59:42'),
+(22000001, 'Nombre1', 'Apellido1', 'calle 99 56799999', 11111111, 'a@lumno1.c', '2020-07-09 01:00:14'),
+(22000001, 'Nombre1 2', 'Apellido1 2', 'otra calle 300', 11111111, 'a@jajaja.com', '2020-07-09 01:00:41');
+-- --------------------------------------------------------
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `solicitudesalumnos`
+--
+
+DROP TABLE IF EXISTS `solicitudesalumnos`;
+CREATE TABLE IF NOT EXISTS `solicitudesalumnos` (
+  `idsolicitud` int(11) NOT NULL AUTO_INCREMENT,
+  `dni` int(11) NOT NULL,
+  `idcurso` int(11) DEFAULT NULL,
+  `fechasolicitud` datetime DEFAULT CURRENT_TIMESTAMP,
+  `estado` varchar(9) CHARACTER SET utf8 DEFAULT "Pendiente",
+  PRIMARY KEY (`idsolicitud`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `solicitudesalumnos`
+--
+
+INSERT INTO `solicitudesalumnos` (`dni`, `idcurso`, `fechasolicitud`) VALUES
+(31000125, 110, '2020-07-09 01:49:00'),
+(31000125, 110, '2020-07-09 00:41:45'),
+(31000125, 110, '2020-07-09 00:43:23'),
+(31000125, 110, '2020-07-09 00:49:00'),
+(31000125, 110, '2020-07-09 00:50:17'),
+(22000001, 110, '2020-07-09 00:50:38'),
+(22000001, 200,  '2020-07-09 00:56:39'),
+(22000001, 110,  '2020-07-09 00:58:04'),
+(22000001, 110,  '2020-07-09 00:59:42'),
+(22000001, 300,  '2020-07-09 01:00:14'),
+(22000001, 110,  '2020-07-09 01:00:41');
+-- --------------------------------------------------------
+
+
 
 --
 -- Estructura de tabla para la tabla `consultasprofesores`

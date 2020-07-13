@@ -1,7 +1,7 @@
 <template>
 
-  <section class="src-components-profesor-opciones-datos">
-    <Header texto="Mis Datos Personales"/>
+  <section class="src-components-coordinador-modificar-profesor">
+    <Header texto="Modificar Profesor"/>
 
     <div class="jumbotron">
       <vue-form :state="formState" @submit.prevent="enviar()">
@@ -49,12 +49,11 @@
             :disabled="enviado"
           />
           <field-messages name="apellido" show="$dirty">
-            <div slot="required" class="alert alert-info my-1">
-              Campo Obligatorio
-            </div>
-            <div slot="minlength" class="alert alert-danger my-1">
-              El apellido debe tener por lo menos {{ largoMin }} caracteres
-            </div>
+            <div slot="required" class="alert alert-info my-1">Campo Obligatorio</div>
+            <div
+              slot="minlength"
+              class="alert alert-danger my-1"
+            >El apellido debe tener por lo menos {{ largoMin }} caracteres</div>
           </field-messages>
         </validate>
 
@@ -75,12 +74,11 @@
             :disabled="enviado"
           />
           <field-messages name="nombre" show="$dirty">
-            <div slot="required" class="alert alert-info my-1">
-              Campo Obligatorio
-            </div>
-            <div slot="minlength" class="alert alert-danger my-1">
-              El nombre debe tener por lo menos {{ largoMin }} caracteres
-            </div>
+            <div slot="required" class="alert alert-info my-1">Campo Obligatorio</div>
+            <div
+              slot="minlength"
+              class="alert alert-danger my-1"
+            >El nombre debe tener por lo menos {{ largoMin }} caracteres</div>
           </field-messages>
         </validate>
 
@@ -101,12 +99,11 @@
             :disabled="enviado"
           />
           <field-messages name="direccion" show="$dirty">
-            <div slot="required" class="alert alert-info my-1">
-              Campo Obligatorio
-            </div>
-            <div slot="minlength" class="alert alert-danger my-1">
-              La dirección debe tener por lo menos {{ largoMin }} caracteres
-            </div>
+            <div slot="required" class="alert alert-info my-1">Campo Obligatorio</div>
+            <div
+              slot="minlength"
+              class="alert alert-danger my-1"
+            >La dirección debe tener por lo menos {{ largoMin }} caracteres</div>
           </field-messages>
         </validate>
 
@@ -127,12 +124,8 @@
             :disabled="enviado"
           />
           <field-messages name="email" show="$dirty">
-            <div slot="required" class="alert alert-info my-1">
-              Campo Obligatorio
-            </div>
-            <div slot="email" class="alert alert-danger my-1">
-              Email no válido
-            </div>
+            <div slot="required" class="alert alert-info my-1">Campo Obligatorio</div>
+            <div slot="email" class="alert alert-danger my-1">Email no válido</div>
           </field-messages>
         </validate>
 
@@ -153,12 +146,8 @@
             :disabled="enviado"
           >
           <field-messages name="telefono" show="$dirty">
-            <div slot="required" class="alert alert-danger my-1">
-              Campo Obligatorio
-            </div>
-            <div slot="min" class="alert alert-danger my-1">
-              El telefono debe tener como mínimo 6 números
-            </div>
+            <div slot="required" class="alert alert-danger my-1">Campo Obligatorio</div>
+            <div slot="min" class="alert alert-danger my-1">El telefono debe tener como mínimo {{telefonoMin}} números</div>
           </field-messages>
         </validate>
 
@@ -173,6 +162,7 @@
 
       </vue-form>  
     </div>
+
   </section>
 
 </template>
@@ -181,10 +171,9 @@
 
   import Header from '../Auxiliares/Header.vue'
   import { urlProfesores } from '../../Dependencias/urls'
-  import moment from 'moment'
 
   export default  {
-    name: 'src-components-profesor-opciones-datos',
+    name: 'src-components-coordinador-modificar-profesor',
     props: [],
     components: {
       Header
@@ -221,51 +210,39 @@
         }
       },
       recargarFormulario() {
-        this.formData.dni = this.$store.state.usuario.dni
-        this.formData.legajo = this.$store.state.usuario.legajo
-        this.formData.apellido = this.$store.state.usuario.apellido
-        this.formData.nombre = this.$store.state.usuario.nombre
-        this.formData.email = this.$store.state.usuario.email
-        this.formData.direccion = this.$store.state.usuario.direccion
-        this.formData.telefono = this.$store.state.usuario.telefono      
+        this.formData.dni = this.$store.state.profesor.dni
+        this.formData.legajo = this.$store.state.profesor.legajo
+        this.formData.apellido = this.$store.state.profesor.apellido
+        this.formData.nombre = this.$store.state.profesor.nombre
+        this.formData.email = this.$store.state.profesor.email
+        this.formData.direccion = this.$store.state.profesor.direccion
+        this.formData.telefono = this.$store.state.profesor.telefono      
       },
       enviar() {
         this.toggleEnviando()
         this.enviado = true
         this.etiquetaBoton = "Enviando..."
-        const solicitud = {
-          dni: this.formData.dni,
-          legajo: this.formData.legajo,
-          apellido: this.formData.apellido,
-          nombre: this.formData.nombre,
-          email: this.formData.email,
-          direccion: this.formData.direccion,
-          telefono: this.formData.telefono,
-          fechasolicitud: moment().format() 
-        }
+
         setTimeout(() => {
-          this.axios.post(urlProfesores + 'cargarsolicitudactualizaciondatos/', solicitud, {
-            'content-type' : 'application/json'
-          })
+          this.axios.put(urlProfesores + this.formData.dni, this.formData)
           .then(res => {
-            if(res.data.estado){
+            if(res.data.error){
               this.errorEnvio = true
               this.estiloMensajeEnviado = "alert alert-danger my-1"
-              this.mensajeEnvio = "Error al enviar la solicitud"
+              this.mensajeEnvio = "Error al modificar el Profesor"
             }
             else {
               this.estiloMensajeEnviado = "alert alert-success my-1"
-              this.mensajeEnvio = "Se ha enviado la solicitud al coordinador"
+              this.mensajeEnvio = "Profesor modificado satisfactoriamente"
             }
           })
           .catch(error => {
-            console.log('ERROR POST HTTP', error)
+            console.log('ERROR PUT HTTP', error)
           })
           this.etiquetaBoton = "Enviar"
           this.toggleEnviando()
-          
         },1000)
-      }
+      } 
     },
     computed: {
 
@@ -276,7 +253,7 @@
 </script>
 
 <style scoped lang="css">
-  .src-components-profesor-opciones-datos {
+  .src-components-coordinador-modificar-profesor {
 
   }
   .jumbotron {

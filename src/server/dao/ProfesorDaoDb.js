@@ -208,7 +208,8 @@ class ProfesorDaoDb extends ProfesorDao {
         }catch(error){
             resultado = {
                 "error": 400,
-                "msg": error
+                "msg": "Problema en Dao",
+                "objetito": error
             }
             return resultado
         }
@@ -239,7 +240,23 @@ class ProfesorDaoDb extends ProfesorDao {
         }
     
         return resultado
-    }   
+    }
+    
+    async buscarCursosDeProfesorDni(dni) { 
+        let cursos
+        try {
+            const db = await this.client.getDb()
+            cursos = await db.select().from('curso')
+            .join('nivel', 'nivel.idcurso', 'curso.idcurso')
+            .join('profesorescursos', 'profesorescursos.idcurso', 'curso.idcurso')
+            .join('empleadoslegajos', 'profesorescursos.legajo', 'empleadoslegajos.legajo')
+            .join('datoscontacto', 'empleadoslegajos.dni', 'datoscontacto.dni')
+            .where('empleadoslegajos.dni', '=', dni)
+            return cursos
+        } catch (err) {
+            throw new CustomError(400, 'Error al buscar los cursos', err)
+        }
+    } 
 
     async asignarCursoAProfesor(idcurso,legajo)
     {
@@ -344,6 +361,21 @@ class ProfesorDaoDb extends ProfesorDao {
         try {
             const db = await this.client.getDb()
             resultado = await db.insert(datos).into('consultasprofesores')
+        } catch(err){
+           throw new CustomError(400, 'Error al cargar la consulta del profesor para el coordinador', err)
+        }
+        return resultado
+    }
+
+    async modificarConsultaParaCoordinador(consulta) {
+        let resultado
+        try {
+            const db = await this.client.getDb()
+            resultado = await db('consultasprofesores')
+            .where('idConsulta', '=', consulta.idConsulta)
+            .update({
+                leida: consulta.leida 
+            })
         } catch (error) {
             resultado = {
                 "error": 400,
@@ -358,11 +390,8 @@ class ProfesorDaoDb extends ProfesorDao {
         try {
             const db = await this.client.getDb()
             resultado = await db.insert(datos).into('actualizardatosprofesor')
-        } catch (error) {
-            resultado = {
-                "error": 400,
-                "msg": "Error al cargar el pedido de actualización de datos"
-            }
+        } catch(err){
+            throw new CustomError(400, 'Error cargar la solicitud', err)
         }
         return resultado
     }

@@ -36,11 +36,12 @@
             :disabled="enviado"
           />
           <field-messages name="nombre" show="$dirty">
-            <div slot="required" class="alert alert-info my-1">Campo Obligatorio</div>
-            <div
-              slot="minlength"
-              class="alert alert-danger my-1"
-            >El nombre debe tener por lo menos {{ largoMin }} caracteres</div>
+            <div slot="required" class="alert alert-info my-1">
+              Campo Obligatorio
+            </div>
+            <div slot="minlength" class="alert alert-danger my-1">
+              El nombre debe tener por lo menos {{ largoMin }} caracteres
+            </div>
           </field-messages>
         </validate>
 
@@ -61,18 +62,19 @@
             :disabled="enviado"
           />
           <field-messages name="dificultad" show="$dirty">
-            <div slot="required" class="alert alert-info my-1">Campo Obligatorio</div>
-            <div
-              slot="minlength"
-              class="alert alert-danger my-1"
-            >El nivel debe tener por lo menos {{ largoMin }} caracteres</div>
+            <div slot="required" class="alert alert-info my-1">
+              Campo Obligatorio
+            </div>
+            <div slot="minlength" class="alert alert-danger my-1">
+              El nivel debe tener por lo menos {{ largoMin }} caracteres
+            </div>
           </field-messages>
         </validate>
 
         <br/>
 
         <div class="col-1">
-          <button class="btn btn-success my-4" :disabled="formState.$invalid" type="submit">{{ this.etiquetaBoton }}</button>
+          <button class="btn btn-success my-4" :disabled="formState.$invalid || formState.$submitted" type="submit">{{ this.etiquetaBoton }}</button>
         </div>
         <div :class="estiloMensajeEnviado" v-if="enviado">
           {{ mensajeEnvio }}
@@ -127,9 +129,6 @@
         this.formData.nombrecurso = this.$store.state.curso.nombrecurso
         this.formData.dificultad = this.$store.state.curso.dificultad
       },
-      toggleEnviando() {
-        this.enviando = !this.enviando
-      },
       enviar() {
         this.toggleEnviando()
         this.enviado = true
@@ -143,7 +142,7 @@
             if(res.data.error){
               this.errorEnvio = true
               this.estiloMensajeEnviado = "alert alert-danger my-1"
-              this.mensajeEnvio = "Error modificar el Curso"
+              this.mensajeEnvio = "Error al modificar el Curso"
             }
             else {
               this.estiloMensajeEnviado = "alert alert-success my-1"
@@ -151,7 +150,7 @@
             }
           })
           .catch(error => {
-            console.log('ERROR GET HTTP', error)
+            console.log('ERROR PUT HTTP', error)
           })
           this.etiquetaBoton = "Enviar"
           this.toggleEnviando()

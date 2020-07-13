@@ -21,6 +21,20 @@ class Cliente {
         return cliDTO
     }
 
+    async cargarConsulta(datos) {
+        const postOpt = {
+            method: 'POST',
+            uri: this.serverUrl + '/cargarconsultacoordinador',
+            json: true
+        }
+        if (datos) {
+            postOpt.body = datos
+        }
+
+        const cliDTO = await request(postOpt)
+        return cliDTO
+    }
+
     async borrarProfesor(dni) {
         await request({
             method: 'DELETE',
@@ -63,6 +77,15 @@ class Cliente {
         const cliDTOs = await request({
             method: 'GET',
             uri: this.serverUrl + '/getcursosporlegajo/' + legajo,
+            json: true
+        })
+        return cliDTOs
+    }
+
+    async buscarCursosPorDni(dni) {
+        const cliDTOs = await request({
+            method: 'GET',
+            uri: this.serverUrl + '/getcursospordni/' + dni,
             json: true
         })
         return cliDTOs
