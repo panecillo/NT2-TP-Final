@@ -71,6 +71,7 @@
       
       getCurso() {
         this.$store.dispatch('tengoCurso')
+        console.log(this.$store.state.tengoCurso)
         if(this.$store.state.tengoCurso) {
           this.axios.get(urlCursos + 'cursos/' + this.$store.state.usuario.idcurso)
           .then( res => {

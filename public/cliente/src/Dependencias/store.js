@@ -164,7 +164,7 @@ export default new Vuex.Store({
             state.solicitud = solicitud
         },
         tengoCurso(state) {
-            state.tengoCurso = state.curso != null
+            state.tengoCurso = localStorage.getItem('idcurso') != null
         }
     }
 })
