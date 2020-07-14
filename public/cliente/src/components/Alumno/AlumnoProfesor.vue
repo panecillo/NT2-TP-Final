@@ -6,9 +6,9 @@
     <div v-if="$store.state.tengoCurso">
 
       <div class="jumbotron">
-        <p>Nombre: {{ profesor[0].apellido }} {{ profesor[0].nombre }}</p>
-        <p>Telefono: {{ profesor[0].telefono }}</p>
-        <p>Email: {{ profesor[0].email }}</p>
+        <p>Nombre: {{ this.$store.state.profesor.apellido }} {{ this.$store.state.profesor.nombre }}</p>
+        <p>Telefono: {{ this.$store.state.profesor.telefono }}</p>
+        <p>Email: {{ this.$store.state.profesor.email }}</p>
       </div>
 
     </div>
@@ -46,7 +46,7 @@
       getProfesor() {
         this.axios.get(urlCoordinadores + 'getprofesorporcurso/' + this.$store.state.usuario.idcurso)
         .then( res => {
-          this.profesor = res.data
+          this.$store.dispatch('cargaProfesor', res.data[0])
         })
         .catch(error => {
           console.log('ERROR GET HTTP', error)

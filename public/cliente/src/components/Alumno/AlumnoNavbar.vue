@@ -20,7 +20,7 @@
           </li>
           <li class="nav-item">
             <router-link to="/AlumnoProfesor" tag="li"> 
-              <a class="nav-link" href="#">Mi Profesor</a>
+              <a class="nav-link" href="#" v-on:click="tengoProfesor()">Mi Profesor</a>
             </router-link>
           </li>
           <li class="nav-item dropdown">
@@ -71,7 +71,6 @@
       
       getCurso() {
         this.$store.dispatch('tengoCurso')
-        console.log(this.$store.state.tengoCurso)
         if(this.$store.state.tengoCurso) {
           this.axios.get(urlCursos + 'cursos/' + this.$store.state.usuario.idcurso)
           .then( res => {
@@ -82,6 +81,9 @@
           })
         }
       },
+      tengoProfesor() {
+        this.$store.dispatch('tengoCurso')
+      }
 
     },
     computed: {
