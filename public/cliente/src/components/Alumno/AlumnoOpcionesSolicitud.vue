@@ -13,7 +13,7 @@
             id="cursoActual"
             class="form-control"
             name="cursoActual"
-            v-model="this.$store.state.curso[0].nombrecurso"
+            v-model="formData.cursoActual"
             required
             disabled
           />
@@ -37,7 +37,7 @@
         <br/>
 
         <div class="col-1">
-          <button class="btn btn-success my-4" :disabled="formState.$invalid || mismoCurso || enviado " type="submit">{{ this.etiquetaBoton }}</button>
+          <button class="btn btn-success my-4" :disabled="formState.$invalid || mismoCurso || enviado" type="submit">{{ this.etiquetaBoton }}</button>
         </div>
         <div :class="estiloMensajeEnviado" v-if="enviado">
           {{ mensajeEnvio }}
@@ -94,14 +94,23 @@
         }
       },
       recargarFormulario() {
-        /* if(this.$store.state.curso != undefined){
+        if(this.$store.state.curso != undefined){
         this.formData.cursoActual = this.$store.state.curso[0].nombrecurso
-        } */
+        }
       },
       getCursos() {
         this.axios.get(urlCursos + 'cursos')
         .then( res => {
-          this.cursos = res.data
+          let i = 0
+          let cursosConProfesor = []
+          while(res.data != null && i < res.data.length)
+          {
+            if(res.data[i].legajo != null) {
+              cursosConProfesor.push(res.data[i])
+            }
+            i++
+          }
+          this.cursos = cursosConProfesor
         })
         .catch(error => {
           console.log('ERROR GET HTTP', error)

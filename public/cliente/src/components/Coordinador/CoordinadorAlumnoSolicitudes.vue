@@ -3,6 +3,11 @@
   <section class="src-components-coordinador-solicitudes" v-if="$store.state.solicitudes">
     <Header texto="Solicitudes de Cambio de Curso"/>
 
+      <input type="checkbox" id="checkbox" v-model="verPendientes" style="display:none" v-on:click="aplicarFiltro()">
+      <label for="checkbox" class="btn btn-primary active" v-bind:style="colorFiltro()">{{ verBotonFiltro }}</label>
+
+    <br>
+
     <table class="table">
       <tr class="thead-dark">
         <th>Estado</th>
@@ -11,7 +16,7 @@
         <th>Curso</th>
         <th>Detalles</th>
       </tr>
-      <tr v-for="(solicitud, id) in this.$store.state.solicitudes" :key="id">
+      <tr class="fila" v-bind:style="colorEstado(solicitud.estado)" v-for="(solicitud, id) in this.$store.state.solicitudes" :key="id">
         <td> {{ solicitud.estado}} </td>
         <td> {{ solicitud.fechasolicitud  | formatearFecha }} </td>
         <td> {{ solicitud.dni }} </td>
@@ -44,6 +49,8 @@
     },
     data () {
       return {
+        verPendientes: false,
+        botonFiltro: "Mostrar Solo Pendientes"
       }
     },
     
@@ -94,12 +101,56 @@
       },
       getSolicitud(solicitud) {
         this.solicitud = this.$store.dispatch('cargaSolicitud', solicitud)
+      },
+      colorEstado(estado) {
+        let colorEstado = {
+          color: '',
+          backgroundColor: '',
+          display: ''
+        }
+        switch(estado) {
+        case "Procesado": 
+          colorEstado.color = "white";
+          colorEstado.backgroundColor = "lightgreen";
+          break;
+        case "Rechazado":
+          colorEstado.color = "white";
+          colorEstado.backgroundColor = "lightcoral";
+          break;
+        default:
+          colorEstado.color = "black";
+          colorEstado.backgroundColor = "lightyellow";
+        }
+        if(this.verPendientes && estado != "Pendiente") {
+          colorEstado.display = "none"
+        }
+        return colorEstado
+      },
+      aplicarFiltro() {
+        this.verPendientes = !this.verPendientes
+        if(!this.verPendientes) {
+          this.botonFiltro = "Mostrar Solo Pendientes"
+        }
+        else {
+          this.botonFiltro = "Mostrar Todos"
+        }
+      },
+      colorFiltro() {
+        let colorFiltro = {
+          color: '',
+          backgroundColor: '',
+          display: ''
+        }
+        if(this.verPendientes) {
+          colorFiltro.background = "crimson"
+        }
+        return colorFiltro
       }
-
-
     },
     computed: {
-      
+        verBotonFiltro() {
+          return this.botonFiltro
+        }
     }
 }
 
@@ -126,5 +177,12 @@
   }
   button {
     width: 6rem;
+  }
+  .btn {
+    margin-left: 1rem;
+    margin-bottom: 1rem;
+    height: 2.5rem;
+    width: 15rem;
+    background-color: burlywood;
   }
 </style>

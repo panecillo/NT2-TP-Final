@@ -12,10 +12,10 @@
       <p class="sub">Dni: {{ this.$store.state.solicitud.dni }}</p>
       <hr>
       <h5>Datos del Nuevo Curso</h5>
-      <p class="sub">Curso: {{ this.$store.state.curso[0].nombrecurso }}</p>
+      <p class="sub" v-if="$store.state.curso">Curso: {{ this.$store.state.curso[0].nombrecurso }}</p>
       <p class="sub">Nivel: {{ this.$store.state.curso[0].dificultad }}</p>
       <hr>
-      <h5>Estado: {{ solicitud.estado}}</h5>
+      <h5>Estado: {{ this.$store.state.solicitud.estado}}</h5>
       <div class="col-2">
         <button class="btn btn-success my-4" :disabled="enviando" v-on:click="procesar()">{{ this.etiquetaBotonProcesar }}</button>
       </div>
@@ -88,7 +88,7 @@
       },
       rechazar() {
         this.etiquetaBotonRechazar = "Rechazando"
-        this.$store.state.solicitud.estado = "Procesado"
+        this.$store.state.solicitud.estado = "Rechazado"
         setTimeout(() => {
           let paraEnviar = {
             curso: this.$store.state.curso[0].idcurso,
@@ -117,7 +117,7 @@
     },
     computed: {
       enviando() {
-        return (!(this.etiquetaBotonProcesar == "Procesar" && this.etiquetaBotonRechazar == "Rechazar") || this.$store.state.solicitud.estado == "Procesado")
+        return (!(this.etiquetaBotonProcesar == "Procesar" && this.etiquetaBotonRechazar == "Rechazar") || this.$store.state.solicitud.estado == "Procesado" || this.$store.state.solicitud.estado == "Rechazado")
       }
     }
 }
