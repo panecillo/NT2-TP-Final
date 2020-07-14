@@ -1,12 +1,20 @@
 <template>
 
-  <section class="src-components-alumno-profesor" v-if="profesor">
+  <section class="src-components-alumno-profesor">
     <Header texto="Mi Profesor"/>
 
-    <div class="jumbotron">
-      <p>Nombre: {{ profesor[0].apellido }} {{ profesor[0].nombre }}</p>
-      <p>Telefono: {{ profesor[0].telefono }}</p>
-      <p>Email: {{ profesor[0].email }}</p>
+    <div v-if="$store.state.tengoCurso">
+
+      <div class="jumbotron">
+        <p>Nombre: {{ profesor[0].apellido }} {{ profesor[0].nombre }}</p>
+        <p>Telefono: {{ profesor[0].telefono }}</p>
+        <p>Email: {{ profesor[0].email }}</p>
+      </div>
+
+    </div>
+
+    <div v-else class="alert alert-danger">
+      No tienes ningún profesor
     </div>
 
   </section>
@@ -25,7 +33,9 @@
       Header
     },
     mounted () {
-      this.getProfesor()
+      if(this.$store.state.tengoCurso) {
+        this.getProfesor()
+      }
     },
     data () {
       return {

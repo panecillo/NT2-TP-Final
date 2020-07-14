@@ -91,13 +91,20 @@
         })
       },
       getCurso(idcurso) {
-        this.axios.get(urlCursos + 'cursos/' + idcurso)
-        .then( res => {
-          this.$store.dispatch('cargarCurso', res.data)
-        })
-        .catch(error => {
-          console.log('ERROR GET HTTP', error)
-        })
+        if(idcurso) {
+          this.axios.get(urlCursos + 'cursos/' + idcurso)
+          .then( res => {
+            this.$store.dispatch('cargarCurso', res.data)
+          })
+          .catch(error => {
+            console.log('ERROR GET HTTP', error)
+          })
+        }
+        else {
+          this.getCursos()
+          this.$store.dispatch('cargarCurso', null)
+        }
+        
       },
       getSolicitud(solicitud) {
         this.solicitud = this.$store.dispatch('cargaSolicitud', solicitud)
@@ -119,7 +126,7 @@
           break;
         default:
           colorEstado.color = "black";
-          colorEstado.backgroundColor = "lightyellow";
+          colorEstado.backgroundColor = "";
         }
         if(this.verPendientes && estado != "Pendiente") {
           colorEstado.display = "none"
@@ -142,9 +149,29 @@
           display: ''
         }
         if(this.verPendientes) {
-          colorFiltro.background = "crimson"
+          colorFiltro.background = "green"
+          colorFiltro.color = "white"
         }
         return colorFiltro
+      },
+      getCursos() {
+        this.axios.get(urlCursos + 'cursos')
+        .then( res => {
+          let i = 0
+          let cursosConProfesores = []
+          while(res.data != null && i < res.data.length)
+          {
+            if(res.data[i].legajo != null) {
+              cursosConProfesores.push(res.data[i])
+              this.$store.dispatch('cargarCursos', cursosConProfesores)
+            }
+            i++
+          }
+          this.cursosConProfesores = cursosConProfesores
+        })
+        .catch(error => {
+          console.log('ERROR GET HTTP', error)
+        })
       }
     },
     computed: {
@@ -183,6 +210,5 @@
     margin-bottom: 1rem;
     height: 2.5rem;
     width: 15rem;
-    background-color: burlywood;
   }
 </style>

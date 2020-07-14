@@ -2,6 +2,11 @@
 
   <section class="src-components-coordinador-consultas">
     <Header texto="Consultas de Profesores"/>
+
+    <input type="checkbox" id="checkbox" v-model="verPendientes" style="display:none" v-on:click="aplicarFiltro()">
+    <label for="checkbox" class="btn btn-primary active" v-bind:style="colorFiltro()">{{ verBotonFiltro }}</label>
+
+    <br>
     
     <table class="table">
       <tr class="thead-dark">
@@ -11,7 +16,7 @@
         <th>Nombre</th>
         <th>Detalles</th>
       </tr>
-      <tr v-for="(consulta, id) in consultas" :key="id">
+      <tr v-bind:style="colorEstado(consulta.leida)" v-for="(consulta, id) in consultas" :key="id">
         <td> {{ consulta.leida | leida }} </td>
         <td> {{ consulta.idConsulta }} </td>
         <td> {{ consulta.fecha  | formatearFecha }} </td>
@@ -43,7 +48,9 @@
     },
     data () {
       return {
-        consultas: []
+        consultas: [],
+        verPendientes: false,
+        botonFiltro: "Mostrar No Leidas"
       }
     },
     methods: {
@@ -58,10 +65,53 @@
         .catch(error => {
           console.log('ERROR GET HTTP', error)
         })
+      },
+      colorEstado(estado) {
+        let colorEstado = {
+          color: '',
+          backgroundColor: '',
+          display: ''
+        }
+        switch(estado) {
+        case 1: 
+          colorEstado.color = "white";
+          colorEstado.backgroundColor = "lightgreen";
+          break;
+        default:
+          colorEstado.color = "black";
+          colorEstado.backgroundColor = "";
+        }
+        if(this.verPendientes && estado == 1) {
+          colorEstado.display = "none"
+        }
+        return colorEstado
+      },
+      aplicarFiltro() {
+        this.verPendientes = !this.verPendientes
+        if(!this.verPendientes) {
+          this.botonFiltro = "Mostrar No Leidas"
+        }
+        else {
+          this.botonFiltro = "Mostrar Todas"
+        }
+      },
+      colorFiltro() {
+        let colorFiltro = {
+          color: '',
+          backgroundColor: '',
+          display: ''
+        }
+        if(this.verPendientes) {
+          colorFiltro.background = "green"
+          colorFiltro.color = "white"
+        }
+        return colorFiltro
       }
     },
     computed: {
-
+      verBotonFiltro() {
+        return this.botonFiltro
+      }
     }
 }
 
@@ -71,5 +121,28 @@
 <style scoped lang="css">
   .src-components-coordinador-consultas {
 
+  }
+  .jumbotron {
+    padding-top: 20px;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+    background-blend-mode:difference;
+    background-color: rgba(190, 211, 238, 0.952);
+  }
+  .col-1 {
+    display: inline-block;
+  }
+  .alert {
+    margin-left: 60px;
+    display: inline-block;
+  }
+  button {
+    width: 6rem;
+  }
+  .btn {
+    margin-left: 1rem;
+    margin-bottom: 1rem;
+    height: 2.5rem;
+    width: 15rem;
   }
 </style>

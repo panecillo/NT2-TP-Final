@@ -226,7 +226,7 @@ class CoordinadorDaoDb extends CoordinadorDao {
     {
         // Verificar que el Alumno exista
         let buscarAlumno
-        let resultado = 959
+        let resultado = 0
 
         
         
@@ -235,27 +235,26 @@ class CoordinadorDaoDb extends CoordinadorDao {
             buscarAlumno =  await db.select().from('estudiante')
             .where('estudiante.dni', '=' , pedido.dni)
             if ( buscarAlumno.length != 0)  {
-
                 const curso = {
                     idcurso:Number(pedido.curso)
-                } 
-                
+                }            
                 // El Alumno existe, debo cargar el curso
                 // Actualizo la tabla Alumno/Cursos
-
-                
-
                 try {    
  //                   await db.update({'dni':pedido.dni, 'idcurso':pedido.curso})
-
-                    
-                    await db.update(curso)
-                    .from('estudiante')
-                    .where('dni','=',pedido.dni)
-                    await db.update({'idcurso':pedido.solicitud.idcurso, 'estado': pedido.solicitud.estado})
-                    .from('solicitudesalumnos')
-                    .where('idsolicitud', '=', pedido.solicitud.idsolicitud)
-                    
+                    if(pedido.curso != 0) { 
+                        await db.update(curso)
+                        .from('estudiante')
+                        .where('dni','=',pedido.dni)
+                        await db.update({'idcurso':pedido.solicitud.idcurso, 'estado': pedido.solicitud.estado})
+                        .from('solicitudesalumnos')
+                        .where('idsolicitud', '=', pedido.solicitud.idsolicitud)
+                    }
+                    else {
+                        await db.update({'estado': pedido.solicitud.estado})
+                        .from('solicitudesalumnos')
+                        .where('idsolicitud', '=', pedido.solicitud.idsolicitud)
+                    }
 
                 } 
                 catch (err) {

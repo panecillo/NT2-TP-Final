@@ -70,13 +70,16 @@
     methods: {
       
       getCurso() {
-        this.axios.get(urlCursos + 'cursos/' + this.$store.state.usuario.idcurso)
-        .then( res => {
-          this.$store.dispatch('cargarCurso',res.data)
-        })
-        .catch(error => {
-          console.log('ERROR GET HTTP', error)
-        })
+        this.$store.dispatch('tengoCurso')
+        if(this.$store.state.tengoCurso) {
+          this.axios.get(urlCursos + 'cursos/' + this.$store.state.usuario.idcurso)
+          .then( res => {
+            this.$store.dispatch('cargarCurso',res.data)
+          })
+          .catch(error => {
+            console.log('ERROR GET HTTP', error)
+          })
+        }
       },
 
     },

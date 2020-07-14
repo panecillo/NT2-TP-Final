@@ -208,14 +208,6 @@
       },
       recargarFormulario() {
         this.formData = this.$store.state.usuario
-        /*         
-        this.formData.dni = this.$store.state.usuario.dni
-        this.formData.apellido = this.$store.state.usuario.apellido
-        this.formData.nombre = this.$store.state.usuario.nombre
-        this.formData.email = this.$store.state.usuario.email
-        this.formData.direccion = this.$store.state.usuario.direccion
-        this.formData.telefono = this.$store.state.usuario.telefono
-        */
       },
 
       enviar() {

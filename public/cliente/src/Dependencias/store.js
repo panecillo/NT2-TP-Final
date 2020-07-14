@@ -16,7 +16,8 @@ export default new Vuex.Store({
         horarios: undefined,
         horariosProfesor: undefined,
         solicitudes: undefined,
-        solicitud: undefined
+        solicitud: undefined,
+        tengoCurso: false
     },
     actions : {
         login({commit}, usuario) {
@@ -73,6 +74,9 @@ export default new Vuex.Store({
         cargaSolicitud({commit}, solicitud) {
             commit('cargaSolicitud', solicitud)
         },
+        tengoCurso({commit}) {
+            commit('tengoCurso')
+        }
     },
     mutations : {
         login(state, usuario) {
@@ -158,6 +162,9 @@ export default new Vuex.Store({
         },
         cargaSolicitud(state, solicitud) {
             state.solicitud = solicitud
+        },
+        tengoCurso(state) {
+            state.tengoCurso = state.curso != null
         }
     }
 })
